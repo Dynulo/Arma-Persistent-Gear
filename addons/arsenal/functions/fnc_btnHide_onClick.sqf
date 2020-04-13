@@ -2,7 +2,7 @@
 
 params ["_display"];
 
-if (getMissionConfigValue ["pmcEnabled", ""] isEqualTo "") exitWith {
+if !(EGVAR(main,enabled)) exitWith {
 	[_display] call ace_arsenal_fnc_buttonHide;
 };
 

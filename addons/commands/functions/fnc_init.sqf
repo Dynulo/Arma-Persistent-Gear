@@ -3,4 +3,4 @@
 INFO("Creating dynulo command");
 ["dynulo", {
 	[_this, player] remoteExec [QFUNC(handle), REMOTE_SERVER];
-}, "all"] call CBA_fnc_registerChatCommand;
+}, "adminLogged"] call CBA_fnc_registerChatCommand;

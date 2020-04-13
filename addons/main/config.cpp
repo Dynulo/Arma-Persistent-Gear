@@ -11,3 +11,5 @@ class CfgPatches {
     VERSION_CONFIG;
   };
 };
+
+#include "Cfg3DEN.hpp"

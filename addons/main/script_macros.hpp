@@ -18,5 +18,5 @@
 #define REMOTE_CLIENTS  ([0,-2] select isDedicated)
 
 // functions
-#define REQUIRE_PMC if (getMissionConfigValue ["pmcEnabled", ""] isEqualTo "") exitWith {};
+#define REQUIRE_PMC if !(EGVAR(main,enabled)) exitWith {};
 #define NO_HC if !(hasInterface) exitWith { player setVariable [QEGVAR(main,ignore), true, true]; };
