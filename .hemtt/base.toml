@@ -1,0 +1,7 @@
+name = "ArmaPMC"
+prefix = "pmc"
+author = "Brett"
+mainprefix = "dynulo"
+include = ["./include"]
+folder_optionals = true
+sig_version = 3
