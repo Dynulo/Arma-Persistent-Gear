@@ -2,6 +2,10 @@
 
 params ["_args", "_player"];
 
+_args = (_args select 0) splitString " ";
+
+INFO_2("dynulo command ran for %1 mod: %2", _args select 0, _args select 1);
+
 if !(isServer) exitWith {};
 if !((_args select 0) isEqualTo "pmc") exitWith {};
 
@@ -11,6 +15,7 @@ switch (_args select 1) do {
 	};
 	case "register": {
 		USAGE(1, "register [code]");
+		[_args select 2, _player] call FUNC(register);
 	};
 	case "status": {
 		MSG("Unimplemented");

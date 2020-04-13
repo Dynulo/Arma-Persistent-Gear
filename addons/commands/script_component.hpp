@@ -20,5 +20,6 @@
 
 #define USAGE(COUNT, MESSAGE) \
 if (count _args != COUNT + 2) exitWith { \
-	MSG(format ["Usage: #dynulo pmc %1", MESSAGE]); \
+  private _text = format ["Usage: #dynulo pmc %1", MESSAGE]; \
+	MSG(_text); \
 }

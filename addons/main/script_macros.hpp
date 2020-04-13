@@ -14,8 +14,8 @@
 
 // remoteExec
 #define REMOTE_GLOBAL   0
-#define REMOTE_SERVER   2
-#define REMOTE_CLIENTS  -2
+#define REMOTE_SERVER   ([player,2] select isDedicated)
+#define REMOTE_CLIENTS  ([0,-2] select isDedicated)
 
 // functions
 #define REQUIRE_PMC if (getMissionConfigValue ["pmcEnabled", ""] isEqualTo "") exitWith {};

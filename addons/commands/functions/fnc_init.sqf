@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 
-LOG("Creating command");
+INFO("Creating dynulo command");
 ["dynulo", {
 	[_this, player] remoteExec [QFUNC(handle), REMOTE_SERVER];
-}, "adminLogged"] call CBA_fnc_registerChatCommand;
+}, "all"] call CBA_fnc_registerChatCommand;

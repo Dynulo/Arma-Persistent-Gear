@@ -1,4 +1,4 @@
 #include "script_component.hpp"
 
-LOG("Creating command globally");
-[] remoteExec [QFUNC(init), REMOTE_CLIENTS, true];
+INFO_1("Creating command globally with %1", QFUNC(init));
+remoteExec [QFUNC(init), REMOTE_CLIENTS, true];
