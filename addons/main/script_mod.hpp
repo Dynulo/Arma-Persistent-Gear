@@ -1,6 +1,8 @@
 #define MAINPREFIX dynulo
 #define PREFIX pmc
 
+#define EXT "dynulo_pmc"
+
 #include "script_version.hpp"
 
 #define VERSION MAJOR.MINOR.PATCH.BUILD

@@ -6,10 +6,10 @@ if (getMissionConfigValue ["pmcEnabled", ""] isEqualTo "") exitWith {
 	[_display] call ace_arsenal_fnc_buttonHide;
 };
 
-private _items = (getUnitLoadout player) call FUNC(listItems);
-
-[_display, _items] spawn {
-	params ["_display", "_items"];
+// TODO is there a better way to use guiMessage
+[_display] spawn {
+	params ["_display"];
+	private _items = (getUnitLoadout player) call FUNC(items_list);
 	private _text = "";
 	{
 		_x params ["_item", "_price", "_need", "_total"];
@@ -17,9 +17,9 @@ private _items = (getUnitLoadout player) call FUNC(listItems);
 			private _name = getText ((_item call CBA_fnc_getItemConfig) >> "displayName");
 			_text = format ["%1%2 x %3 @ %4 = %5<br/>", _text, _name, _need, _price, _total];
 		};
-	} forEach ([_items] call FUNC(difference));
-	_text = parseText format ["%1Total: %2", _text, [_items] call FUNC(itemsCost)];
-	_result = [_text, "Confirm Purchase", true, true, _display, false, false] call BIS_fnc_guiMessage;
+	} forEach ([_items] call FUNC(items_difference));
+	_text = parseText format ["%1Total: %2", _text, [_items] call FUNC(items_cost)];
+	private _result = [_text, "Confirm Purchase", true, true, _display, false, false] call BIS_fnc_guiMessage;
 	if (_result) then {
 		private _cost = [_items] call FUNC(buyItems);
 		[_items] call CBA_fnc_deleteNamespace;

@@ -9,3 +9,14 @@
   #undef PREP
   #define PREP(fncName) [QPATHTOF(functions\DOUBLES(fnc,fncName).sqf), QFUNC(fncName)] call CBA_fnc_compileFunction
 #endif
+
+#define BLANK_LOADOUT [[],[],[],[],[],[],"","",[],["","","","","",""]]
+
+// remoteExec
+#define REMOTE_GLOBAL   0
+#define REMOTE_SERVER   2
+#define REMOTE_CLIENTS  -2
+
+// functions
+#define REQUIRE_PMC if (getMissionConfigValue ["pmcEnabled", ""] isEqualTo "") exitWith {};
+#define NO_HC if !(hasInterface) exitWith { player setVariable [QEGVAR(main,ignore), true, true]; };
