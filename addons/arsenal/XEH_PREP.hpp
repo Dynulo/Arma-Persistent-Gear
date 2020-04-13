@@ -11,7 +11,9 @@ PREP(item_price);
 PREP(items_buy);
 PREP(items_cost);
 PREP(items_difference);
-PREP(items_item_listingpopulate);
+PREP(items_populate);
+
+PREP(item_listing);
 
 PREP(locker_add);
 PREP(locker_quantity);

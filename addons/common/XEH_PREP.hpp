@@ -1,2 +1,2 @@
-PREP(cleanLoadouts);
+PREP(cleanLoadout);
 PREP(findFromSteam);
