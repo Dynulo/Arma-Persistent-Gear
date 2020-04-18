@@ -17,8 +17,10 @@ lazy_static! {
     static ref TOKEN: RwLock<String> = RwLock::new(String::new());
 }
 
+mod items;
 mod loadouts;
 mod models;
+mod traits;
 mod variables;
 
 #[rv_handler]
@@ -70,3 +72,39 @@ fn get_variables(player: u64) {
 fn save_variables(player: u64, vars: String) {
     variables::internal_save(player, vars);
 }
+
+// Traits
+
+#[rv(thread = true)]
+fn get_traits(player: u64) {
+    if let Some(traits) = traits::internal_get(player) {
+        let mut v = Vec::new();
+        for trait_ in traits {
+            v.push(format!("\"\"{}\"\"", trait_.trait_));
+        }
+        rv_callback!("dynulo_pmc", "traits", format!("[{}]", v.join(",")));
+    }
+}
+
+#[rv(thread = true)]
+fn save_trait(player: u64, trait_: String) {
+    traits::internal_save(player, trait_);
+}
+
+#[rv(thread = true)]
+fn delete_trait(player: u64, trait_: String) {
+    traits::internal_delete(player, trait_);
+}
+
+// Items
+
+// #[rv(thread = true)]
+// fn get_items() {
+//     if let Some(items) = items::internal_get() {
+//         let mut v = Vec::new();
+//         for item in items {
+//             v.push(format!("\"\"{}\"\"", item));
+//         }
+//         rv_callback!("dynulo_pmc", "traits", format!("[{}]", v.join(",")));
+//     }
+// }

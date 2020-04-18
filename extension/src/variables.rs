@@ -37,8 +37,18 @@ pub fn internal_save(player: u64, array: String) {
     let mut variables: HashMap<String, String> = HashMap::new();
     for mat in RE.captures_iter(&array) {
         variables.insert(
-            mat.get(1).unwrap().as_str().trim_start_matches("\"\"").trim_end_matches("\"\"").to_string(),
-            mat.get(2).unwrap().as_str().trim_start_matches("\"\"").trim_end_matches("\"\"").to_string(),
+            mat.get(1)
+                .unwrap()
+                .as_str()
+                .trim_start_matches("\"\"")
+                .trim_end_matches("\"\"")
+                .to_string(),
+            mat.get(2)
+                .unwrap()
+                .as_str()
+                .trim_start_matches("\"\"")
+                .trim_end_matches("\"\"")
+                .to_string(),
         );
     }
     let mut map = HashMap::new();
