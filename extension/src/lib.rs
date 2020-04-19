@@ -13,7 +13,7 @@ extern crate serde;
 
 lazy_static! {
     static ref HOST: String =
-        std::env::var("DYNULO_PMC_HOST").unwrap_or_else(|_| "https://pmc.dynulo.com".to_string());
+        std::env::var("DYNULO_PMC_HOST").unwrap_or_else(|_| "http://localhost:8000".to_string());
     static ref TOKEN: RwLock<String> = RwLock::new(String::new());
 }
 
@@ -21,10 +21,12 @@ mod items;
 mod loadouts;
 mod models;
 mod traits;
+mod purchases;
+mod transactions;
 mod variables;
 
 #[rv_handler]
-fn init() {}
+const fn init() {}
 
 #[rv]
 fn setup(token: String) -> bool {
@@ -59,6 +61,20 @@ fn save_loadout(player: u64, loadout: String) {
     loadouts::internal_save(player, loadout);
 }
 
+// Purchases
+
+#[rv(thread = true)]
+fn purchase(player: u64, class: String, amount: i32, quantity: i32) {
+    purchases::internal_save(player, class, amount, quantity)
+}
+
+// Transactions
+
+#[rv(thread = true)]
+fn transaction(player: u64, reason: String, amount: i32) {
+    transactions::internal_save(player, reason, amount)
+}
+
 // Variables
 
 #[rv(thread = true)]
@@ -70,7 +86,7 @@ fn get_variables(player: u64) {
 
 #[rv(thread = true)]
 fn save_variables(player: u64, vars: String) {
-    variables::internal_save(player, vars);
+    variables::internal_save(player, &vars);
 }
 
 // Traits

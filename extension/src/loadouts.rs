@@ -31,7 +31,8 @@ pub fn internal_save(player: u64, loadout: String) {
         .post(&format!("{}/v1/players/{}/loadout", *crate::HOST, player))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())
         .json(&map)
-        .send();
+        .send()
+        .unwrap();
 }
 
 #[test]

@@ -29,13 +29,13 @@ pub fn internal_get(player: u64) -> Option<String> {
 }
 
 // TODO log errors
-pub fn internal_save(player: u64, array: String) {
+pub fn internal_save(player: u64, array: &str) {
     if crate::TOKEN.read().unwrap().is_empty() {
         println!("Empty token");
         return;
     }
     let mut variables: HashMap<String, String> = HashMap::new();
-    for mat in RE.captures_iter(&array) {
+    for mat in RE.captures_iter(array) {
         variables.insert(
             mat.get(1)
                 .unwrap()
@@ -70,7 +70,7 @@ fn test_variables() {
         .take(30)
         .collect();
     let save = format!("[[\"\"test\"\",\"\"{}\"\"]]", rand_string);
-    internal_save(123_456_789, save.clone());
+    internal_save(123_456_789, &save);
     if let Some(variables) = internal_get(123_456_789) {
         assert_eq!(variables, save);
     } else {

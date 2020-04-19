@@ -1,4 +1,4 @@
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Loadout {
     pub guild: String,
     pub player: u64,

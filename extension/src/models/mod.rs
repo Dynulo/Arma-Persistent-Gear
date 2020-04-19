@@ -1,6 +1,12 @@
 mod loadout;
 pub use loadout::Loadout;
 
+mod purchase;
+pub use purchase::Purchase;
+
+mod transaction;
+pub use transaction::Transaction;
+
 mod variables;
 pub use variables::{Variable, Variables};
 
