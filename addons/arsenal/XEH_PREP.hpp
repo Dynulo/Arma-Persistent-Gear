@@ -5,15 +5,14 @@ PREP(handleDisplayOpened);
 PREP(handleLeftPanelFilled);
 PREP(handleRightPanelFilled);
 
+PREP(item_get);
 PREP(item_listing);
 PREP(item_price);
 
 PREP(items_buy);
 PREP(items_cost);
 PREP(items_difference);
-PREP(items_populate);
-
-PREP(item_listing);
+PREP(items_list);
 
 PREP(locker_add);
 PREP(locker_quantity);

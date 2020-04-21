@@ -18,7 +18,7 @@ pub fn internal_save(player: u64, class: String, amount: i32, quantity: i32) {
         quantity,
     });
     let mut map = HashMap::new();
-    map.insert("purcahses", purchases);
+    map.insert("purchases", purchases);
     reqwest::blocking::Client::new()
         .post(&format!("{}/v1/players/{}/purchases", *crate::HOST, player))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())

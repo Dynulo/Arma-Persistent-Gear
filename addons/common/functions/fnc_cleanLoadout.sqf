@@ -1,5 +1,7 @@
 #include "script_component.hpp"
 
+params ["_loadout"];
+
 // Remove "ItemRadioAcreFlagged"
 if ((_loadout select 9) select 2 == "ItemRadioAcreFlagged") then {
     (_loadout select 9) set [2, ""];

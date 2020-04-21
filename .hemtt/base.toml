@@ -3,6 +3,7 @@ prefix = "pmc"
 author = "Brett"
 mainprefix = "dynulo"
 include = ["./include"]
+files = ["mod.cpp"]
 
 postbuild = ["!extension"]
 releasebuild = ["@zip {{modname}}", "@zip {{key_name}}"]
@@ -11,7 +12,7 @@ releasebuild = ["@zip {{modname}}", "@zip {{key_name}}"]
 show_output = true
 steps_windows = [
     "cd extension && cargo build --release",
-    "copy extension\\target\\release\\pmc.dll dynulo_pmc_x64.dll"
+    "copy extension\\target\\release\\dynulo_pmc.dll dynulo_pmc_x64.dll"
 ]
 steps_linux = [
     "echo \"Unable to build extension on Linux\""

@@ -8,7 +8,8 @@ private _cost = 0;
 	// (desired) - (already owned)
 	private _need = (_items getVariable [_x, 0]) - ([_x] call FUNC(locker_quantity));
 	if (_need > 0) then {
-		_cost = _cost + (([_x] call FUNC(item_cost)) * _need);
+		private _price = [_x] call FUNC(item_price);
+		_cost = _cost + (_price * _need);
 	};
 } forEach allVariables _items;
 

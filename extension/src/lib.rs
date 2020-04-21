@@ -25,17 +25,22 @@ mod purchases;
 mod transactions;
 mod variables;
 
-#[rv_handler]
-const fn init() {}
-
 #[rv]
 fn setup(token: String) -> bool {
+    rv_callback!("dynulo_pmc", "setupReceived", "");
     if token.is_empty() {
         false
     } else {
         *TOKEN.write().unwrap() = token;
         true
     }
+}
+
+#[rv]
+#[allow(unused_must_use)]
+fn browser(url: String) -> String {
+    webbrowser::open(&url);
+    url
 }
 
 #[test]
@@ -51,7 +56,7 @@ fn get_loadout(player: u64) {
         rv_callback!(
             "dynulo_pmc",
             "loadout",
-            format!("[{}, {}]", loadout.player, loadout.loadout)
+            format!("[\"\"{}\"\", \"\"{}\"\"]", loadout.player, loadout.loadout)
         );
     }
 }
@@ -80,7 +85,7 @@ fn transaction(player: u64, reason: String, amount: i32) {
 #[rv(thread = true)]
 fn get_variables(player: u64) {
     if let Some(variables) = variables::internal_get(player) {
-        rv_callback!("dynulo_pmc", "variables", variables);
+        rv_callback!("dynulo_pmc", "variables", format!("[\"\"{}\"\", {}]", player, variables));
     }
 }
 
@@ -98,7 +103,7 @@ fn get_traits(player: u64) {
         for trait_ in traits {
             v.push(format!("\"\"{}\"\"", trait_.trait_));
         }
-        rv_callback!("dynulo_pmc", "traits", format!("[{}]", v.join(",")));
+        rv_callback!("dynulo_pmc", "traits", format!("[\"\"{}\"\", [{}]]", player, v.join(",")));
     }
 }
 
@@ -114,13 +119,20 @@ fn delete_trait(player: u64, trait_: String) {
 
 // Items
 
-// #[rv(thread = true)]
-// fn get_items() {
-//     if let Some(items) = items::internal_get() {
-//         let mut v = Vec::new();
-//         for item in items {
-//             v.push(format!("\"\"{}\"\"", item));
-//         }
-//         rv_callback!("dynulo_pmc", "traits", format!("[{}]", v.join(",")));
-//     }
-// }
+#[rv(thread = true)]
+fn get_items() {
+    if let Some(items) = items::internal_get() {
+        let mut v = Vec::new();
+        for item in items {
+            let mut traits = Vec::new();
+            for trait_ in item.traits.split('|') {
+                traits.push(format!("\"\"{}\"\"", trait_));
+            }
+            v.push(format!("[\"\"{}\"\", {}, [{}]]", item.class, item.cost, traits.join(",")));
+        }
+        rv_callback!("dynulo_pmc", "items", format!("[{}]", v.join(",")));
+    }
+}
+
+#[rv_handler]
+const fn init() {}

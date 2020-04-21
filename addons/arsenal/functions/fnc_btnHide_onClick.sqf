@@ -21,7 +21,7 @@ if !(EGVAR(main,enabled)) exitWith {
 	_text = parseText format ["%1Total: %2", _text, [_items] call FUNC(items_cost)];
 	private _result = [_text, "Confirm Purchase", true, true, _display, false, false] call BIS_fnc_guiMessage;
 	if (_result) then {
-		private _cost = [_items] call FUNC(buyItems);
+		private _cost = [_items] call FUNC(items_buy);
 		[_items] call CBA_fnc_deleteNamespace;
 		// Trigger events manually to color owned items
 		["ace_arsenal_leftPanelFilled", [_display]] call CBA_fnc_localEvent;

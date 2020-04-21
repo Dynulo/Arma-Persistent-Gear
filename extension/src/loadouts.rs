@@ -26,6 +26,7 @@ pub fn internal_save(player: u64, loadout: String) {
         return;
     }
     let mut map = HashMap::new();
+    println!("loadout {}", loadout);
     map.insert("loadout", loadout);
     reqwest::blocking::Client::new()
         .post(&format!("{}/v1/players/{}/loadout", *crate::HOST, player))

@@ -21,7 +21,6 @@ pub fn internal_get() -> Option<Vec<crate::models::Item>> {
 fn test_items() {
     crate::setup("d1d76da3-d759-4637-83d3-c5084c0b99ce".to_string());
     let items = internal_get().unwrap();
-    println! {"in hererererer{:?}", items[0]}
     assert_eq!(items[0].class, "prince");
     assert_eq!(items[0].cost, 1);
 }

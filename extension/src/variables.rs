@@ -20,7 +20,7 @@ pub fn internal_get(player: u64) -> Option<String> {
         let crate::models::Variables(vars) = s;
         let mut v = Vec::new();
         for var in vars {
-            v.push(format!("[\"\"{}\"\",\"\"{}\"\"]", var.vkey, var.vvalue));
+            v.push(format!("[\"\"{}\"\",{}]", var.vkey, var.vvalue));
         }
         Some(format!("[{}]", v.join(",")))
     } else {
@@ -46,8 +46,6 @@ pub fn internal_save(player: u64, array: &str) {
             mat.get(2)
                 .unwrap()
                 .as_str()
-                .trim_start_matches("\"\"")
-                .trim_end_matches("\"\"")
                 .to_string(),
         );
     }

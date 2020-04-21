@@ -12,7 +12,6 @@ dependencies = [
 [[package]]
 name = "arma-rs"
 version = "0.1.0"
-source = "git+https://github.com/synixebrett/arma-rs#a120249ea6aecd3cad6590e59fee65d5b98f309e"
 dependencies = [
  "lazy_static",
  "libc",
@@ -25,7 +24,7 @@ dependencies = [
 [[package]]
 name = "arma-rs-macros"
 version = "0.1.0"
-source = "git+https://github.com/synixebrett/arma-rs#a120249ea6aecd3cad6590e59fee65d5b98f309e"
+source = "git+https://github.com/synixebrett/arma-rs#9e0d587c4c7a979092b5b792c34af379e26947a4"
 
 [[package]]
 name = "autocfg"
@@ -103,6 +102,7 @@ dependencies = [
  "regex",
  "reqwest",
  "serde",
+ "webbrowser",
 ]
 
 [[package]]
@@ -1062,6 +1062,22 @@ dependencies = [
  "js-sys",
  "wasm-bindgen",
 ]
+
+[[package]]
+name = "webbrowser"
+version = "0.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "97d468a911faaaeb783693b004e1c62e0063e646b0afae5c146cd144e566e66d"
+dependencies = [
+ "widestring",
+ "winapi 0.3.8",
+]
+
+[[package]]
+name = "widestring"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "effc0e4ff8085673ea7b9b2e3c73f6bd4d118810c9009ed8f1e16bd96c331db6"
 
 [[package]]
 name = "winapi"

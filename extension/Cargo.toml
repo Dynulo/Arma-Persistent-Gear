@@ -5,17 +5,19 @@ authors = ["Dynulo"]
 edition = "2018"
 
 [lib]
-name = "pmc"
+name = "dynulo_pmc"
 crate-type = ["cdylib"]
 
 [dependencies]
-arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
+#arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
+arma-rs = { path = "../../arma-rs/arma-rs", branch = "master" }
 arma-rs-macros = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
 libc = "0.2"
 lazy_static = "1"
 reqwest = { version = "0.10", features = ["json", "blocking"] }
 serde = { version = "1.0", features = ["derive"] }
 regex = "*"
+webbrowser = "0.5"
 
 [dev-dependencies]
 rand = "0.7"

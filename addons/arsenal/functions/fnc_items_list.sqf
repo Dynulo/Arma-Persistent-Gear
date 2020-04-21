@@ -85,13 +85,13 @@ _fnc_addContainer = {
 
 // Binocular
 {
-	private _item = loadout select 8 select 0;
+	private _item = _loadout select 8 select 0;
 	[_item] call _fnc_addItem;
 };
 
 // Linked Items
 {
-	private _item = loadout select 9 select _x;
+	private _item = _loadout select 9 select _x;
 	[_item] call _fnc_additem;
 } forEach [0, 1, 2, 3, 4, 5];
 
