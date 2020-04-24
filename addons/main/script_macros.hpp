@@ -14,7 +14,7 @@
 
 // remoteExec
 #define REMOTE_GLOBAL   0
-#define REMOTE_SERVER   ([player,2] select isDedicated)
+#define REMOTE_SERVER   ([2,([player,2] select isDedicated)] select isServer)
 #define REMOTE_CLIENTS  ([0,-2] select isDedicated)
 
 // functions
