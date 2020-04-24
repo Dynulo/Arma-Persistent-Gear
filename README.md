@@ -19,7 +19,7 @@ Persistent PMC for Arma 3
 - **Synched Traits**  
   Arma PMC tracks:
   - ACE Medic Ability (Medic / Doctor)
-  - ACE Engineer Status
+  - ACE Engineer Ability
   - ACE Earplugs
 
 - **Cloud Synched Data**  

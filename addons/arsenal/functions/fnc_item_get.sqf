@@ -4,6 +4,8 @@ params ["_class"];
 
 private _ret = _class;
 
+private _class = toLower _class;
+
 private _index = EGVAR(db,items) findIf { (toLower (_x select 0)) isEqualTo _class};
 
 if (_index != -1) then {
