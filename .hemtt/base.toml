@@ -3,7 +3,7 @@ prefix = "pmc"
 author = "Brett"
 mainprefix = "dynulo"
 include = ["./include"]
-files = ["mod.cpp"]
+files = ["mod.cpp", "dynulo_pmc_x64.dll"]
 
 postbuild = ["!extension"]
 releasebuild = ["@zip {{modname}}", "@zip {{key_name}}"]
