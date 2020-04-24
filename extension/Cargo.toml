@@ -9,8 +9,8 @@ name = "dynulo_pmc"
 crate-type = ["cdylib"]
 
 [dependencies]
-#arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
-arma-rs = { path = "../../arma-rs/arma-rs", branch = "master" }
+arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
+#arma-rs = { path = "../../arma-rs/arma-rs", branch = "master" }
 arma-rs-macros = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
 libc = "0.2"
 lazy_static = "1"
