@@ -10,22 +10,19 @@ NO_HC;
 		[QEGVAR(arsenal,locker)] call FUNC(variable_track);
 		["ace_medical_medicClass"] call FUNC(variable_track);
 		["ACE_IsEngineer"] call FUNC(variable_track);
+		["ACE_IsEOD"] call FUNC(variable_track);
 		["ACE_hasEarPlugsin"] call FUNC(variable_track);
 
 		// delete corpse
 		addMissionEventHandler ["HandleDisconnect", {
 			params ["_unit", "_id", "_uid", "_name"];
-			[_unit, _uid, _name] call FUNC(db_savePlayer);
-			_unit spawn {
-				sleep 3;
-				deleteVehicle _this;
-			};
+			deleteVehicle _unit;
 		}];
 
 		INFO("setup complete");
 	};
 
-	systemChat "Enabling PMC Persistent System";
+	systemChat "PMC Persistent System Loading";
 	player enableSimulation false;
 	player setVariable [QGVAR(loadoutReady), false, true];
 
@@ -52,6 +49,7 @@ NO_HC;
 				private _old = GVAR(oldVars) getVariable [_x, objNull];
 				if !(_new isEqualTo _old) then {
 					[getPlayerUID player, _x, _new] remoteExec [QFUNC(variable_save), REMOTE_SERVER];
+					call EFUNC(arsenal,populateItems);
 				};
 				GVAR(oldVars) setVariable [_x, _new];
 			} forEach GVAR(tracked);
@@ -67,6 +65,7 @@ NO_HC;
 
 		player setVariable [QGVAR(loadoutReady), true, true];
 		player enableSimulation true;
+		systemChat "PMC Persistent System Ready";
 	}, [], 8] call CBA_fnc_waitAndExecute;
 	[EXT, ["get_loadout", [getplayerUID player]]] remoteExec ["callExtension", REMOTE_SERVER];
 	[EXT, ["get_variables", [getplayerUID player]]] remoteExec ["callExtension", REMOTE_SERVER];

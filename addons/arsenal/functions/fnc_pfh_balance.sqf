@@ -10,8 +10,8 @@ private _items = (getUnitLoadout player) call FUNC(items_list);
 private _cost = [_items] call FUNC(items_cost);
 [_items] call CBA_fnc_deleteNamespace;
 
-// Default 2000 balance
-private _balance = player getVariable [QGVAR(balance), 2000];
+// Default 3000 balance
+private _balance = player getVariable [QGVAR(balance), 3000];
 if (_cost == 0) then {
 	_btnHide ctrlEnable false;
 	_btnHide ctrlSetText format ["Balance: %1", _balance];

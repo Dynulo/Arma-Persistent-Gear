@@ -20,6 +20,7 @@ Persistent PMC for Arma 3
   Arma PMC tracks:
   - ACE Medic Ability (Medic / Doctor)
   - ACE Engineer Ability
+  - ACE EOD Ability
   - ACE Earplugs
 
 - **Cloud Synched Data**  

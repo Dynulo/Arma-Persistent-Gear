@@ -5,6 +5,7 @@ PREP(handleDisplayOpened);
 PREP(handleLeftPanelFilled);
 PREP(handleRightPanelFilled);
 
+PREP(item_canUse);
 PREP(item_get);
 PREP(item_listing);
 PREP(item_price);
@@ -19,3 +20,4 @@ PREP(locker_quantity);
 PREP(locker_take);
 
 PREP(pfh_balance);
+PREP(populateItems);

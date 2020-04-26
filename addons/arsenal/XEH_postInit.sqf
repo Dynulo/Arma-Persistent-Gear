@@ -30,3 +30,5 @@ player setVariable [QGVAR(inArsenal), false, true];
 [{
 	ace_arsenal_enableIdentityTabs = false;
 }, [], 5] call CBA_fnc_waitAndExecute;
+
+[QGVAR(populateItems), FUNC(populateItems)] call CBA_fnc_addEventHandler;

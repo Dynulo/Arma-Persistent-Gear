@@ -6,7 +6,7 @@ pub fn internal_save(player: u64, reason: String, amount: i32) {
     }
     reqwest::blocking::Client::new()
         .post(&format!(
-            "{}/v1/players/{}/transaction",
+            "{}/v1/players/{}/transactions",
             *crate::HOST,
             player
         ))
