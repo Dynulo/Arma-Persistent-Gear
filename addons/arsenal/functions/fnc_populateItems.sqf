@@ -10,6 +10,6 @@ private _add = [];
 
 // Refresh Arsenals
 {
-	[_x, true, false] call ace_arsenal_fnc_removeVirtualItems;
-	[_x, _add] call ace_arsenal_fnc_initBox;
+	[_x, false] call ace_arsenal_fnc_removeBox;
+	[_x, _add, false] call ace_arsenal_fnc_initBox;
 } forEach GVAR(boxes);

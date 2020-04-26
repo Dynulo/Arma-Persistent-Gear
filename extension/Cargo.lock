@@ -12,6 +12,7 @@ dependencies = [
 [[package]]
 name = "arma-rs"
 version = "0.1.0"
+source = "git+https://github.com/synixebrett/arma-rs#9e0d587c4c7a979092b5b792c34af379e26947a4"
 dependencies = [
  "lazy_static",
  "libc",
