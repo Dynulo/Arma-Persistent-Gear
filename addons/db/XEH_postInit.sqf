@@ -26,18 +26,6 @@ NO_HC;
 	player enableSimulation false;
 	player setVariable [QGVAR(loadoutReady), false, true];
 
-	// [{time > 60 && !(isNull player)}, {
-	// 	[{
-	// 		[0, {
-	// 			if !(_this getVariable [QGVAR(ignore), false]) then {
-	// 				if !(_this getVariable [QGVAR(inArsenal), false]) then {
-	// 					[_this, getPlayerUID _this] call FUNC(db_savePlayer);
-	// 				};
-	// 			};
-	// 		}, player] call CBA_fnc_globalExecute;
-	// 	}, 30] call CBA_fnc_addPerFrameHandler;
-	// }] call CBA_fnc_waitUntilAndExecute;
-
 	[{
 		// Save the loadout every time it changes
 		["loadout", FUNC(loadout_onChange)] call CBA_fnc_addPlayerEventHandler;
@@ -66,7 +54,9 @@ NO_HC;
 		player setVariable [QGVAR(loadoutReady), true, true];
 		player enableSimulation true;
 		systemChat "PMC Persistent System Ready";
-	}, [], 8] call CBA_fnc_waitAndExecute;
+	}, [], 6] call CBA_fnc_waitAndExecute;
+	
 	[EXT, ["get_loadout", [getplayerUID player]]] remoteExec ["callExtension", REMOTE_SERVER];
 	[EXT, ["get_variables", [getplayerUID player]]] remoteExec ["callExtension", REMOTE_SERVER];
+	[EXT, ["set_nickname", [getplayerUID player, name player]]] remoteExec ["callExtension", REMOTE_SERVER];
 }, {}, 1] call CBA_fnc_waitAndExecute;

@@ -17,11 +17,13 @@ lazy_static! {
     static ref TOKEN: RwLock<String> = RwLock::new(String::new());
 }
 
+mod models;
+
 mod items;
 mod loadouts;
-mod models;
-mod traits;
+mod players;
 mod purchases;
+mod traits;
 mod transactions;
 mod variables;
 
@@ -132,6 +134,13 @@ fn get_items() {
         }
         rv_callback!("dynulo_pmc", "items", format!("[{}]", v.join(",")));
     }
+}
+
+// Players
+
+#[rv(thread = true)]
+fn set_nickname(player: u64, nickname: String) {
+    players::internal_save(player, nickname);
 }
 
 #[rv_handler]

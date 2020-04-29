@@ -3,6 +3,11 @@
 REQUIRE_PMC;
 NO_HC;
 
+if (isServer) then {
+	publicVariable QGVAR(boxes);
+};
+if (isDedicated) exitWith {};
+
 player setVariable [QGVAR(inArsenal), false, true];
 
 // Handle ACE Arsenal Events

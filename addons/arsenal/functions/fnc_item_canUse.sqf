@@ -18,6 +18,9 @@ private _ret = false;
 		case "eod": {
 			_ret = [_unit] call ace_common_fnc_isEOD;
 		};
+		default {
+			_ret = _unit getVariable [format ["pmc_traits_%1", _x], false];
+		};
 		// TODO custom traits
 	};
 } forEach _traits;
