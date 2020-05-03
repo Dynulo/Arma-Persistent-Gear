@@ -4,7 +4,7 @@
     params ["","_object"];
 	if (_object isEqualTo objNull || {!(isPlayer _object)}) exitWith {};
     [
-        format ["Payment - %1", name _object],
+        "Payment",
         [["SLIDER","Payment Amount",[1,5000,1000,0],0],["EDIT","Reason"]],
         {
             params ["_values", "_args"];
@@ -12,7 +12,7 @@
             _args params ["_object"];
             private _current = _object getVariable [QEGVAR(arsenal,balance), 3000];
             _object setVariable [QEGVAR(arsenal,balance), _current + _amount, true];
-			[EXT, ["transaction", [getPlayerUID player, _reason, _amount]]] remoteExec ["callExtension", REMOTE_SERVER];
+			[EXT, ["transaction", [getPlayerUID _object, _reason, _amount]]] remoteExec ["callExtension", REMOTE_SERVER];
         },{},[_object]
     ] call zen_dialog_fnc_create;
 }] call zen_custom_modules_fnc_register;
@@ -21,7 +21,7 @@
     params ["","_object"];
 	if (_object isEqualTo objNull || {!(isPlayer _object)}) exitWith {};
     [
-        format ["Fine - %1", name _object],
+        "Fine",
         [["SLIDER","Fine Amount",[1,5000,200,0],0],["EDIT","Reason"]],
         {
             params ["_values", "_args"];
@@ -29,7 +29,7 @@
             _args params ["_object"];
             private _current = _object getVariable [QEGVAR(arsenal,balance), 3000];
             _object setVariable [QEGVAR(arsenal,balance), _current - _amount, true];
-			[EXT, ["transaction", [getPlayerUID player, _reason, 0 - _amount]]] remoteExec ["callExtension", REMOTE_SERVER];
+			[EXT, ["transaction", [getPlayerUID _object, _reason, 0 - _amount]]] remoteExec ["callExtension", REMOTE_SERVER];
         },{},[_object]
     ] call zen_dialog_fnc_create;
 }] call zen_custom_modules_fnc_register;
