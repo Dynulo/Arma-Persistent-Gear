@@ -12,6 +12,7 @@ dependencies = [
 [[package]]
 name = "arma-rs"
 version = "0.1.0"
+source = "git+https://github.com/synixebrett/arma-rs#160349be8f6cc5c492ddfb5194b40189fe7c503c"
 dependencies = [
  "lazy_static",
  "libc",
@@ -24,7 +25,7 @@ dependencies = [
 [[package]]
 name = "arma-rs-macros"
 version = "0.1.0"
-source = "git+https://github.com/synixebrett/arma-rs#9e0d587c4c7a979092b5b792c34af379e26947a4"
+source = "git+https://github.com/synixebrett/arma-rs#160349be8f6cc5c492ddfb5194b40189fe7c503c"
 
 [[package]]
 name = "autocfg"
