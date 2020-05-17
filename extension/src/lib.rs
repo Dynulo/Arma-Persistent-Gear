@@ -29,7 +29,6 @@ mod variables;
 
 #[rv]
 fn setup(token: String) -> bool {
-    rv_callback!("dynulo_pmc", "setupReceived", "");
     if token.is_empty() {
         false
     } else {
