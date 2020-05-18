@@ -19,4 +19,4 @@
 
 // functions
 #define REQUIRE_PMC if !(EGVAR(main,enabled)) exitWith {};
-#define NO_HC if !(hasInterface) exitWith { player setVariable [QEGVAR(main,ignore), true, true]; };
+#define NO_HC if !(isServer || {hasInterface}) exitWith { INFO("HC detected, exiting init"); player setVariable [QEGVAR(main,ignore), true, true]; };

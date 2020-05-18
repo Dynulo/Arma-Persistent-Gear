@@ -9,10 +9,6 @@ if (typeOf player isEqualto "VirtualCurator_F") exitWith {
 };
 
 if (isServer) then {
-	private _token = profileNamespace getVariable [QEGVAR(main,token), ""];
-	if (_token isEqualTo "") exitWith {};
-	EXT callExtension ["setup", [_token]];
-
 	addMissionEventHandler ["ExtensionCallback", {
 		params ["_name", "_function", "_data"];
 		if !(_name == "dynulo_pmc") exitWith {};

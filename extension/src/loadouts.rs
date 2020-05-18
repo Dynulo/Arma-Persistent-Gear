@@ -2,10 +2,12 @@ use std::collections::HashMap;
 
 // TODO log errors
 pub fn internal_get(player: u64) -> Option<crate::models::Loadout> {
+    println!("Reading token");
     if crate::TOKEN.read().unwrap().is_empty() {
         println!("Empty token");
         return None;
     }
+    println!("About to fetch");
     if let Ok(s) = reqwest::blocking::Client::new()
         .get(&format!("{}/v1/players/{}/loadout", *crate::HOST, player))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())
@@ -13,6 +15,7 @@ pub fn internal_get(player: u64) -> Option<crate::models::Loadout> {
         .unwrap()
         .json::<crate::models::Loadout>()
     {
+        println!("Done fetching");
         Some(s)
     } else {
         None
