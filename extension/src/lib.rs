@@ -110,7 +110,7 @@ fn get_traits(player: u64) {
 
 #[rv(thread = true)]
 fn save_trait(player: u64, trait_: String) {
-    traits::internal_save(player, trait_);
+    traits::internal_save(player, &trait_);
 }
 
 #[rv(thread = true)]

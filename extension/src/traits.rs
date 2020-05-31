@@ -18,7 +18,7 @@ pub fn internal_get(player: u64) -> Option<Vec<crate::models::Trait>> {
 }
 
 // TODO log errors
-pub fn internal_save(player: u64, trait_name: String) {
+pub fn internal_save(player: u64, trait_name: &str) {
     if crate::TOKEN.read().unwrap().is_empty() {
         println!("Empty token");
         return;
@@ -58,7 +58,7 @@ fn test_traits() {
         .sample_iter(&rand::distributions::Alphanumeric)
         .take(30)
         .collect();
-    internal_save(123_456_789, rand_string.clone());
+    internal_save(123_456_789, &rand_string);
     let all_traits = internal_get(123_456_789).unwrap();
     assert_eq!(all_traits[0].trait_, rand_string);
     internal_delete(123_456_789, rand_string)
