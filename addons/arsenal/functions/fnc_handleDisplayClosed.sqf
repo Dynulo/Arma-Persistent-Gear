@@ -19,9 +19,19 @@ if !(_cost == 0) then {
 
 player setVariable [QGVAR(inArsenal), false, true];
 
-[player, getUnitLoadout player] call EFUNC(db,loadout_onChange);
+if !(EGVAR(main,readOnly)) then {
+	[player, getUnitLoadout player] call EFUNC(db,loadout_onChange);
+};
 
 // Set locker
+{
+	private _class = toLower ([_x] call FUNC(item_listing));
+	if !(_class isEqualTo _x) then {
+		private _existing = GVAR(locker) getVariable [_x, 0];
+		GVAR(locker) setVariable [_class, _existing + (GVAR(locker) getVariable [toLower _class, 0])];
+		GVAR(locker) setVariable [_x, 0];
+	};
+} forEach allVariables GVAR(locker);
 private _owned = "";
 {
 	private _quantity = GVAR(locker) getVariable [_x, 0];

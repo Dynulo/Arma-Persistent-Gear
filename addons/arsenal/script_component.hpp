@@ -1,5 +1,6 @@
 #define COMPONENT arsenal
 #include "\dynulo\pmc\addons\main\script_mod.hpp"
+#include "\dynulo\pmc\addons\arsenal\defines.hpp"
 #include "\z\ace\addons\arsenal\defines.hpp"
 
 // #define DEBUG_MODE_FULL

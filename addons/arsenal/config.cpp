@@ -14,3 +14,4 @@ class CfgPatches {
 
 #include "RscAttributes.hpp"
 #include "CfgEventHandlers.hpp"
+#include "ui\RscDisplayCheckout.hpp"

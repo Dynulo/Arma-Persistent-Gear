@@ -1,5 +1,7 @@
 PREP(btnHide_onClick);
 
+PREP(checkout_onLoad);
+
 PREP(handleDisplayClosed);
 PREP(handleDisplayOpened);
 PREP(handleLeftPanelFilled);

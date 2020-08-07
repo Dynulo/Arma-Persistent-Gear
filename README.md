@@ -26,6 +26,13 @@ Persistent PMC for Arma 3
 - **Cloud Synched Data**  
   Loadouts, owned items, purchases, transactions, and more is stored in the cloud. Safe from any server issues. Multiple servers can use the same account at the same time, allowing players to join any available slot.
 
+## Compatible Mods
+
+- ACRE2
+- CBA Optics
+- CBA Disposable Launchers
+- CUP Weapons
+
 ## Note
 
 This repository only contains the client side components of ArmaPMC. Additional cloud services are required that are not public. If the cloud services are ever shut down, the code will be made public at that time.

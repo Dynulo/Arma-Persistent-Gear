@@ -6,8 +6,10 @@ player setVariable [QGVAR(inArsenal), true, true];
 
 GVAR(preLoadout) = getUnitLoadout player;
 
-// Send an empty loadout to the database
-[getPlayerUID player, BLANK_LOADOUT] remoteExec [QEFUNC(db,loadout_save), REMOTE_SERVER];
+if !(EGVAR(main,readOnly)) then {
+	// Send an empty loadout to the database
+	[getPlayerUID player, BLANK_LOADOUT] remoteExec [QEFUNC(db,loadout_save), REMOTE_SERVER];
+};
 
 // Store all items the player had
 private _items = (getUnitLoadout player) call FUNC(items_list);

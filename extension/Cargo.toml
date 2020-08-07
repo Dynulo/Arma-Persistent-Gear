@@ -9,13 +9,13 @@ name = "dynulo_pmc"
 crate-type = ["cdylib"]
 
 [dependencies]
-arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
-arma-rs-macros = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
-libc = "0.2"
+# arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
+arma-rs = { path = "../../arma-rs/core" }
 lazy_static = "1"
+log = "0.4"
+regex = "1.3"
 reqwest = { version = "0.10", features = ["json", "blocking", "rustls-tls"], default-features = false }
 serde = { version = "1.0", features = ["derive"] }
-regex = "*"
 webbrowser = "0.5"
 
 [dev-dependencies]

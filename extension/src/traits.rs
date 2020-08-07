@@ -31,7 +31,8 @@ pub fn internal_save(player: u64, trait_name: &str) {
             trait_name
         ))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())
-        .send();
+        .send()
+        .unwrap();
 }
 
 pub fn internal_delete(player: u64, trait_name: String) {
@@ -47,7 +48,8 @@ pub fn internal_delete(player: u64, trait_name: String) {
             trait_name
         ))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())
-        .send();
+        .send()
+        .unwrap();
 }
 
 #[test]

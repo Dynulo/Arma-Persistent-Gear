@@ -14,7 +14,9 @@ private _cost = 0;
 		GVAR(locker) setVariable [_x, _owned + _need];
 		private _balance = player getVariable [QGVAR(balance), 3000];
 		_balance = _balance - (_price * _need);
-		[EXT, ["purchase", [getPlayerUID player, _x, _price, _need]]] remoteExec ["callExtension", REMOTE_SERVER];
+		if !(EGVAR(main,readOnly)) then {
+			[EXT, ["purchase", [getPlayerUID player, _x, _price, _need]]] remoteExec ["callExtension", REMOTE_SERVER];
+		};
 		player setVariable [QGVAR(balance), _balance, true];
 	};
 } forEach allVariables _items;

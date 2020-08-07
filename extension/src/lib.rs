@@ -1,9 +1,9 @@
 use std::sync::RwLock;
 
-use arma_rs::{rv, rv_handler};
+use arma_rs::{rv, rv_callback, rv_handler};
 
 #[macro_use]
-extern crate arma_rs_macros;
+extern crate log;
 
 #[macro_use]
 extern crate lazy_static;
@@ -57,7 +57,8 @@ fn get_loadout(player: u64) {
         rv_callback!(
             "dynulo_pmc",
             "loadout",
-            format!("[\"\"{}\"\", \"\"{}\"\"]", loadout.player, loadout.loadout)
+            loadout.player.to_string(),
+            loadout.loadout
         );
     }
 }
@@ -86,7 +87,9 @@ fn transaction(player: u64, reason: String, amount: i32) {
 #[rv(thread = true)]
 fn get_variables(player: u64) {
     if let Some(variables) = variables::internal_get(player) {
-        rv_callback!("dynulo_pmc", "variables", format!("[\"\"{}\"\", {}]", player, variables));
+        for (k, v) in variables {
+            rv_callback!("dynulo_pmc", "variable", player.to_string(), k, v);
+        }
     }
 }
 
@@ -102,9 +105,9 @@ fn get_traits(player: u64) {
     if let Some(traits) = traits::internal_get(player) {
         let mut v = Vec::new();
         for trait_ in traits {
-            v.push(format!("\"\"{}\"\"", trait_.trait_));
+            v.push(trait_.trait_);
         }
-        rv_callback!("dynulo_pmc", "traits", format!("[\"\"{}\"\", [{}]]", player, v.join(",")));
+        rv_callback!("dynulo_pmc", "traits", player, v);
     }
 }
 
@@ -123,15 +126,16 @@ fn delete_trait(player: u64, trait_: String) {
 #[rv(thread = true)]
 fn get_items() {
     if let Some(items) = items::internal_get() {
-        let mut v = Vec::new();
+        rv_callback!("dynulo_pmc", "clear_items", "");
+        info!("Found {} items", items.len());
         for item in items {
             let mut traits = Vec::new();
             for trait_ in item.traits.split('|') {
-                traits.push(format!("\"\"{}\"\"", trait_));
+                traits.push(trait_.to_string());
             }
-            v.push(format!("[\"\"{}\"\", {}, [{}]]", item.class, item.cost, traits.join(",")));
+            rv_callback!("dynulo_pmc", "item", item.class, item.cost, traits);
         }
-        rv_callback!("dynulo_pmc", "items", format!("[{}]", v.join(",")));
+        rv_callback!("dynulo_pmc", "publish_items", "");
     }
 }
 
@@ -142,5 +146,29 @@ fn set_nickname(player: u64, nickname: String) {
     players::internal_save(player, nickname);
 }
 
+use log::{Level, LevelFilter, Metadata, Record};
+struct ArmaLogger;
+
+impl log::Log for ArmaLogger {
+    fn enabled(&self, metadata: &Metadata) -> bool {
+        metadata.level() <= Level::Info
+    }
+
+    fn log(&self, record: &Record) {
+        if self.enabled(record.metadata()) {
+            rv_callback!(
+                "dynulo_pmc_log",
+                format!("{}", record.level()).to_lowercase(),
+                format!("{}", record.args())
+            );
+        }
+    }
+
+    fn flush(&self) {}
+}
+static LOGGER: ArmaLogger = ArmaLogger;
+
 #[rv_handler]
-const fn init() {}
+fn init() {
+    log::set_logger(&LOGGER).map(|()| log::set_max_level(LevelFilter::Info));
+}

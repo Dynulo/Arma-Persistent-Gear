@@ -42,4 +42,14 @@ if (isText (_nextClass)) then {
 	};
 };
 
+// Check for ACRE
+private _acreCheck = (tolower _class) splitString "_";
+if (count _acreCheck == 4) then {
+	if (_acreCheck select 0 isEqualTo "acre") then {
+		if (_acreCheck select 2 isEqualTo "id") then {
+			_ret = format ["acre_%1", _acreCheck select 1];
+		};
+	};
+};
+
 _ret

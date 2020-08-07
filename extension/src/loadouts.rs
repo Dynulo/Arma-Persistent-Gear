@@ -26,7 +26,7 @@ pub fn internal_save(player: u64, loadout: String) {
         return;
     }
     let mut map = HashMap::new();
-    map.insert("loadout", loadout);
+    map.insert("loadout", loadout.replace("\"\"", "\""));
     reqwest::blocking::Client::new()
         .post(&format!("{}/v1/players/{}/loadout", *crate::HOST, player))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())

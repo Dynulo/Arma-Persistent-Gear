@@ -9,4 +9,4 @@ if !(_override) then {
 	if (_player getVariable [QEGVAR(arsenal,inArsenal), false]) exitWith {};
 };
 
-EXT callExtension ["save_loadout", [_uid, str str ([_loadout] call EFUNC(common,cleanLoadout))]];
+EXT callExtension ["save_loadout", [_uid, str ([_loadout] call EFUNC(common,cleanLoadout))]];

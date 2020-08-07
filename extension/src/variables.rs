@@ -5,7 +5,7 @@ lazy_static! {
 }
 
 // TODO log errors
-pub fn internal_get(player: u64) -> Option<String> {
+pub fn internal_get(player: u64) -> Option<Vec<(String, String)>> {
     if crate::TOKEN.read().unwrap().is_empty() {
         println!("Empty token");
         return None;
@@ -20,9 +20,9 @@ pub fn internal_get(player: u64) -> Option<String> {
         let crate::models::Variables(vars) = s;
         let mut v = Vec::new();
         for var in vars {
-            v.push(format!("[\"\"{}\"\",{}]", var.vkey, var.vvalue));
+            v.push((var.vkey, var.vvalue));
         }
-        Some(format!("[{}]", v.join(",")))
+        Some(v)
     } else {
         None
     }
@@ -36,6 +36,12 @@ pub fn internal_save(player: u64, array: &str) {
     }
     let mut variables: HashMap<String, String> = HashMap::new();
     for mat in RE.captures_iter(array) {
+        info!(
+            "Saving variable for {}: {} = {}",
+            player,
+            mat.get(1).unwrap().as_str(),
+            mat.get(2).unwrap().as_str()
+        );
         variables.insert(
             mat.get(1)
                 .unwrap()
@@ -46,6 +52,8 @@ pub fn internal_save(player: u64, array: &str) {
             mat.get(2)
                 .unwrap()
                 .as_str()
+                .trim_start_matches("\"\"")
+                .trim_end_matches("\"\"")
                 .to_string(),
         );
     }
@@ -70,7 +78,7 @@ fn test_variables() {
     let save = format!("[[\"\"test\"\",\"\"{}\"\"]]", rand_string);
     internal_save(123_456_789, &save);
     if let Some(variables) = internal_get(123_456_789) {
-        assert_eq!(variables, save);
+        assert_eq!(variables, vec![("test".to_string(), rand_string)]);
     } else {
         panic!();
     }
