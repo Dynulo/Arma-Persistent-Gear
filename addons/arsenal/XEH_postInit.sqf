@@ -8,6 +8,17 @@ if (isServer) then {
 };
 if (isDedicated) exitWith {};
 
+// Init Arsenal Option
+private _action = [QGVAR(shop), "Shop", "", {
+	[_target] call FUNC(addShop);
+}, {
+	// TODO replace with isNotEqualTo
+	!(GVAR(arsenalItems) isEqualTo [])
+}] call ace_interact_menu_fnc_createAction;
+{
+	[_x, 0, ["ACE_MainActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+} forEach GVAR(boxes);
+
 player setVariable [QGVAR(inArsenal), false, true];
 
 // Handle ACE Arsenal Events
@@ -31,9 +42,5 @@ player setVariable [QGVAR(inArsenal), false, true];
 	private _path = (str _itemCfg) splitString "/";
 	[_path select ((count _path) - 1)] call FUNC(locker_quantity)
 }, {true}]] call ACE_arsenal_fnc_addStat;
-
-[{
-	ace_arsenal_enableIdentityTabs = false;
-}, [], 5] call CBA_fnc_waitAndExecute;
 
 [QGVAR(populateItems), FUNC(populateItems)] call CBA_fnc_addEventHandler;

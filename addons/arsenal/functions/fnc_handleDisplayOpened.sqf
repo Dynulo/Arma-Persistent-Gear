@@ -16,6 +16,8 @@ private _items = (getUnitLoadout player) call FUNC(items_list);
 [_items] call FUNC(locker_add);
 [_items] call CBA_fnc_deleteNamespace;
 
+call FUNC(locker_save);
+
 GVAR(balanceHandle) = [FUNC(pfh_balance), 0.2, [_display]] call CBA_fnc_addPerFrameHandler;
 
 GVAR(rightPanelColor) = [{

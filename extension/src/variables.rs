@@ -1,70 +1,49 @@
-use std::collections::HashMap;
-
-lazy_static! {
-    static ref RE: regex::Regex = regex::Regex::new(r"(?m)\[([^\[]+?),\s?([^\[]+?)\]").unwrap();
-}
-
-// TODO log errors
-pub fn internal_get(player: u64) -> Option<Vec<(String, String)>> {
+pub fn internal_get(player: u64) -> Result<Vec<(String, String)>, String> {
     if crate::TOKEN.read().unwrap().is_empty() {
-        println!("Empty token");
-        return None;
+        return Err(String::from("Empty token"));
     }
-    if let Ok(s) = reqwest::blocking::Client::new()
-        .get(&format!("{}/v1/players/{}/variables", *crate::HOST, player))
+    match reqwest::blocking::Client::new()
+        .get(&format!("{}/v2/players/{}/variables", *crate::HOST, player))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())
         .send()
         .unwrap()
         .json::<crate::models::Variables>()
     {
-        let crate::models::Variables(vars) = s;
-        let mut v = Vec::new();
-        for var in vars {
-            v.push((var.vkey, var.vvalue));
+        Ok(s) => {
+            let crate::models::Variables(vars) = s;
+            let mut v = Vec::new();
+            for var in vars {
+                v.push((var.vkey, var.vvalue));
+            }
+            Ok(v)
         }
-        Some(v)
-    } else {
-        None
+        Err(e) => Err(e.to_string()),
     }
 }
 
-// TODO log errors
-pub fn internal_save(player: u64, array: &str) {
+pub fn internal_save(player: u64, key: &str, value: &str) -> Result<(), String> {
     if crate::TOKEN.read().unwrap().is_empty() {
-        println!("Empty token");
-        return;
+        return Err(String::from("Empty token"));
     }
-    let mut variables: HashMap<String, String> = HashMap::new();
-    for mat in RE.captures_iter(array) {
-        info!(
-            "Saving variable for {}: {} = {}",
+    match reqwest::blocking::Client::new()
+        .post(&format!(
+            "{}/v2/players/{}/variables/{}",
+            *crate::HOST,
             player,
-            mat.get(1).unwrap().as_str(),
-            mat.get(2).unwrap().as_str()
-        );
-        variables.insert(
-            mat.get(1)
-                .unwrap()
-                .as_str()
-                .trim_start_matches("\"\"")
-                .trim_end_matches("\"\"")
-                .to_string(),
-            mat.get(2)
-                .unwrap()
-                .as_str()
-                .trim_start_matches("\"\"")
-                .trim_end_matches("\"\"")
-                .to_string(),
-        );
-    }
-    let mut map = HashMap::new();
-    map.insert("variables", variables);
-    reqwest::blocking::Client::new()
-        .post(&format!("{}/v1/players/{}/variables", *crate::HOST, player))
+            key
+        ))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())
-        .json(&map)
+        .body(
+            value
+                .trim_start_matches("\"\"")
+                .trim_end_matches("\"\"")
+                .to_string(),
+        )
         .send()
-        .unwrap();
+    {
+        Ok(_) => Ok(()),
+        Err(e) => Err(e.to_string()),
+    }
 }
 
 #[test]
@@ -75,11 +54,7 @@ fn test_variables() {
         .sample_iter(&rand::distributions::Alphanumeric)
         .take(30)
         .collect();
-    let save = format!("[[\"\"test\"\",\"\"{}\"\"]]", rand_string);
-    internal_save(123_456_789, &save);
-    if let Some(variables) = internal_get(123_456_789) {
-        assert_eq!(variables, vec![("test".to_string(), rand_string)]);
-    } else {
-        panic!();
-    }
+    internal_save(123_456_789, "test", &rand_string).unwrap();
+    let variables = internal_get(123_456_789).unwrap();
+    assert_eq!(variables, vec![("test".to_string(), rand_string)]);
 }

@@ -2,7 +2,6 @@
 
 REQUIRE_PMC;
 
-[QEGVAR(arsenal,balance)] call FUNC(variable_track);
 [QEGVAR(arsenal,locker)] call FUNC(variable_track);
 ["ace_medical_medicClass"] call FUNC(variable_track);
 ["ACE_IsEngineer"] call FUNC(variable_track);

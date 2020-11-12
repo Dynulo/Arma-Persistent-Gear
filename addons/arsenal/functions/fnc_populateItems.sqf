@@ -8,8 +8,4 @@ private _add = [];
 	};
 } forEach EGVAR(db,items);
 
-// Refresh Arsenals
-{
-	[_x, false] call ace_arsenal_fnc_removeBox;
-	[_x, _add, false] call ace_arsenal_fnc_initBox;
-} forEach GVAR(boxes);
+GVAR(arsenalItems) = _add;

@@ -1,7 +1,6 @@
 name = "ArmaPMC"
 prefix = "pmc"
 author = "Brett"
-version = "0.4.0"
 mainprefix = "dynulo"
 include = ["./include"]
 files = ["mod.cpp", "dynulo_pmc_x64.dll"]

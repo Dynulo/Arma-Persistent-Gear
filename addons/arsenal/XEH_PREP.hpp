@@ -19,7 +19,9 @@ PREP(items_list);
 
 PREP(locker_add);
 PREP(locker_quantity);
+PREP(locker_save);
 PREP(locker_take);
 
+PREP(addShop);
 PREP(pfh_balance);
 PREP(populateItems);

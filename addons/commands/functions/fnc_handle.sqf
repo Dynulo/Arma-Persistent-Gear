@@ -11,7 +11,7 @@ if !((_args select 0) isEqualTo "pmc") exitWith {};
 
 switch (_args select 1) do {
 	case "version": {
-		MSG("0.1.0");
+		MSG("0.2.0");
 	};
 	case "register": {
 		USAGE(1, "register [code]");

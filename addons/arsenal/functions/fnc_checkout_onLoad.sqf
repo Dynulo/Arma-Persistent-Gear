@@ -39,8 +39,5 @@ private _fnc_onConfirm = {
 	private _items = (getUnitLoadout player) call FUNC(items_list);
 	[_items] call FUNC(items_buy);
 	[_items] call CBA_fnc_deleteNamespace;
-	// Trigger events manually to color owned items
-	["ace_arsenal_leftPanelFilled", [findDisplay 1127001]] call CBA_fnc_localEvent;
-	["ace_arsenal_rightPanelFilled", [findDisplay 1127001]] call CBA_fnc_localEvent;
 };
 (_display displayCtrl 1) ctrlAddEventHandler ["buttonclick", _fnc_onConfirm];

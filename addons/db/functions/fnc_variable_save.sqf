@@ -2,4 +2,6 @@
 
 params ["_uid", "_name", "_value"];
 
-EXT callExtension ["save_variables", [_uid, str [[_name, _value]]]];
+if (EGVAR(main,readOnly)) exitWith {};
+
+EXT callExtension ["save_variable", [_uid, _name, _value]];

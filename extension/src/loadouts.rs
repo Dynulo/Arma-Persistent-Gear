@@ -1,38 +1,36 @@
 use std::collections::HashMap;
 
-// TODO log errors
-pub fn internal_get(player: u64) -> Option<crate::models::Loadout> {
+pub fn internal_get(player: u64) -> Result<crate::models::Loadout, String> {
     if crate::TOKEN.read().unwrap().is_empty() {
-        println!("Empty token");
-        return None;
+        return Err(String::from("Empty token"));
     }
-    if let Ok(s) = reqwest::blocking::Client::new()
-        .get(&format!("{}/v1/players/{}/loadout", *crate::HOST, player))
+    match reqwest::blocking::Client::new()
+        .get(&format!("{}/v2/players/{}/loadout", *crate::HOST, player))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())
         .send()
         .unwrap()
         .json::<crate::models::Loadout>()
     {
-        Some(s)
-    } else {
-        None
+        Ok(s) => Ok(s),
+        Err(e) => Err(e.to_string()),
     }
 }
 
-// TODO log errors
-pub fn internal_save(player: u64, loadout: String) {
+pub fn internal_save(player: u64, loadout: String) -> Result<(), String> {
     if crate::TOKEN.read().unwrap().is_empty() {
-        println!("Empty token");
-        return;
+        return Err(String::from("Empty token"));
     }
     let mut map = HashMap::new();
     map.insert("loadout", loadout.replace("\"\"", "\""));
-    reqwest::blocking::Client::new()
-        .post(&format!("{}/v1/players/{}/loadout", *crate::HOST, player))
+    match reqwest::blocking::Client::new()
+        .post(&format!("{}/v2/players/{}/loadout", *crate::HOST, player))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())
         .json(&map)
         .send()
-        .unwrap();
+    {
+        Ok(_) => Ok(()),
+        Err(e) => Err(e.to_string()),
+    }
 }
 
 #[test]
@@ -43,7 +41,7 @@ fn test_loadouts() {
         .sample_iter(&rand::distributions::Alphanumeric)
         .take(30)
         .collect();
-    internal_save(123_456_789, rand_string.clone());
+    internal_save(123_456_789, rand_string.clone()).unwrap();
     let loadout = internal_get(123_456_789).unwrap();
     assert_eq!(loadout.loadout, rand_string);
 }

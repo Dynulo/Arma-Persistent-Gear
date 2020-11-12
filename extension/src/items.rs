@@ -1,19 +1,16 @@
-// TODO log errors
-pub fn internal_get() -> Option<Vec<crate::models::Item>> {
+pub fn internal_get() -> Result<Vec<crate::models::Item>, String> {
     if crate::TOKEN.read().unwrap().is_empty() {
-        println!("Empty token");
-        return None;
+        return Err(String::from("Empty token"));
     }
-    if let Ok(s) = reqwest::blocking::Client::new()
-        .get(&format!("{}/v1/items/", *crate::HOST))
+    match reqwest::blocking::Client::new()
+        .get(&format!("{}/v2/items", *crate::HOST))
         .header("x-dynulo-guild-token", &*crate::TOKEN.read().unwrap())
         .send()
         .unwrap()
         .json::<Vec<crate::models::Item>>()
     {
-        Some(s)
-    } else {
-        None
+        Ok(s) => Ok(s),
+        Err(e) => Err(e.to_string()),
     }
 }
 
