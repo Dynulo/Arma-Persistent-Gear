@@ -19,7 +19,7 @@ jobs:
     # Upload to GitHub
     - uses: softprops/action-gh-release@v1
       with:
-        files: 'releases/ArmaPMC_${{ env.VERSION }}.zip'
+        files: 'releases/pmc_${{ env.VERSION }}.zip'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     # Upload to Steam Workshop
