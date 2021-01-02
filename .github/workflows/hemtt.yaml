@@ -10,7 +10,7 @@ jobs:
     - name: Set VERSION env
       run: echo VERSION=${GITHUB_REF:11} >> $GITHUB_ENV
     - name: Build addon with HEMTT
-      uses: 16AAModTeam/hemtt@stable
+      uses: arma-actions/hemtt
       with:
         command: 'build --release'
     - uses: actions/upload-artifact@v2
