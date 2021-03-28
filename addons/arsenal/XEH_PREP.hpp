@@ -25,3 +25,6 @@ PREP(locker_take);
 PREP(addShop);
 PREP(pfh_balance);
 PREP(populateItems);
+
+PREP(sortStatement_owned);
+PREP(sortStatement_price);

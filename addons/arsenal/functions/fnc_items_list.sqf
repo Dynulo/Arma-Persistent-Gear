@@ -12,6 +12,9 @@ private _items = call CBA_fnc_createNamespace;
 _fnc_addItem = {
 	params ["_item", ["_count", 1]];
 	if !(_item isEqualTo "") then {
+		if (_count isEqualType true) then {
+			_count = 1;
+		};
 		private _base = [_item] call FUNC(item_listing);
 		private _existing = _items getVariable [_base, 0];
 		_items setVariable [_base, _existing + _count];

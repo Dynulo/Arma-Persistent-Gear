@@ -3,11 +3,10 @@
 REQUIRE_PMC;
 NO_HC;
 
-[{!isNull player}, {
+[{GVAR(serverReady) && {player isNotEqualTo objNull}}, {
 	[QGVAR(publish)] call CBA_fnc_serverEvent;
 
 	systemChat "PMC Persistent System Loading";
-	player enableSimulation false;
 	player setVariable [QGVAR(loadoutReady), false, true];
 
 	if !(EGVAR(main,readOnly)) then {
@@ -33,13 +32,11 @@ NO_HC;
 	} else {
 		systemChat "PMC Persistent System Read-Only Mode";
 	};
-
-	player enableSimulation true;
 	
 	[EXT, ["get_loadout", [getplayerUID player]]] remoteExec ["callExtension", REMOTE_SERVER];
 	[EXT, ["get_variables", [getplayerUID player]]] remoteExec ["callExtension", REMOTE_SERVER];
 	if !(EGVAR(main,readOnly)) then {
-		[EXT, ["set_nickname", [getplayerUID player, name player]]] remoteExec ["callExtension", REMOTE_SERVER];
+		[EXT, ["set_nickname", [getplayerUID player, player getVariable ["ACE_nameraw", name player]]]] remoteExec ["callExtension", REMOTE_SERVER];
 	};
 }] call CBA_fnc_waitUntilAndExecute;
 

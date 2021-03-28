@@ -13,7 +13,7 @@ extern crate serde;
 
 lazy_static! {
     static ref HOST: String =
-        std::env::var("DYNULO_PMC_HOST").unwrap_or_else(|_| "https://pmc.dynulo.com".to_string());
+        std::env::var("DYNULO_PMC_HOST").unwrap_or_else(|_| "https://dev.dynulo.com/pmc".to_string());
     static ref TOKEN: RwLock<String> = RwLock::new(String::new());
 }
 

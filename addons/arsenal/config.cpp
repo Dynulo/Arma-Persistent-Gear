@@ -12,6 +12,7 @@ class CfgPatches {
   };
 };
 
-#include "RscAttributes.hpp"
+#include "AceArsenalSorts.hpp"
 #include "CfgEventHandlers.hpp"
+#include "RscAttributes.hpp"
 #include "ui\RscDisplayCheckout.hpp"
