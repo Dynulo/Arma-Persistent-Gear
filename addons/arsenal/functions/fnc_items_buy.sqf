@@ -45,4 +45,3 @@ GVAR(pendingPurchaseFailedHandle) = [QGVAR(purchase_failed), {
 }] call CBA_fnc_addEventHandler;
 
 [EXT, ["purchase", [getPlayerUID player, str _purchase]]] remoteExec ["callExtension", REMOTE_SERVER];
-systemChat str _purchase;
