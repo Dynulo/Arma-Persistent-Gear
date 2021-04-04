@@ -1,5 +1,7 @@
 #include "script_component.hpp"
 
+if (EGVAR(main,readOnly)) exitWith {};
+
 // TODO might be able to remove
 
 params ["_display", "_leftIDC", "_rightIDC"];

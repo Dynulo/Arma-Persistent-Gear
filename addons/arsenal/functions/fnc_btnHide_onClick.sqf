@@ -2,7 +2,7 @@
 
 params ["_display"];
 
-if !(EGVAR(main,enabled)) exitWith {
+if !(EGVAR(main,enabled) && {!(EGVAR(main,readOnly))}) exitWith {
 	[_display] call ace_arsenal_fnc_buttonHide;
 };
 

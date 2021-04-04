@@ -32,17 +32,14 @@ addMissionEventHandler ["ExtensionCallback", {
 			(parseSimpleArray _data) params ["_steam", "_val"];
 			[_steam, QEGVAR(arsenal,balance), _val] call FUNC(variable_load);
 		};
-
 		case "purchase_success": {
 			private _player = _data call EFUNC(common,findFromSteam);
 			[QEGVAR(arsenal,purchase_success), [], _player] call CBA_fnc_targetEvent;
 		};
-
 		case "purchase_failed": {
 			private _player = _data call EFUNC(common,findFromSteam);
 			[QEGVAR(arsenal,purchase_failed), [], _player] call CBA_fnc_targetEvent;
 		};
-
 		case "variable": {
 			(parseSimpleArray _data) call FUNC(variable_load);
 		};

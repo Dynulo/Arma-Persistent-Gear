@@ -1,5 +1,7 @@
 #include "script_component.hpp"
 
+if (EGVAR(main,readOnly)) exitWith {};
+
 params ["_display"];
 
 player setVariable [QGVAR(inArsenal), true, true];

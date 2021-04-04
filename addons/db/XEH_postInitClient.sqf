@@ -32,7 +32,7 @@ NO_HC;
 	} else {
 		systemChat "PMC Persistent System Read-Only Mode";
 	};
-	
+
 	[EXT, ["get_loadout", [getplayerUID player]]] remoteExec ["callExtension", REMOTE_SERVER];
 	[EXT, ["get_variables", [getplayerUID player]]] remoteExec ["callExtension", REMOTE_SERVER];
 	if !(EGVAR(main,readOnly)) then {

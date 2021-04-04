@@ -1,5 +1,7 @@
 #include "script_component.hpp"
 
+if (EGVAR(main,readOnly)) exitWith {};
+
 params ["_display"];
 private _ctrlPanel = _display displayCtrl IDC_leftTabContent;
 

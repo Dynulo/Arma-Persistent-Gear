@@ -1,5 +1,7 @@
 #include "script_component.hpp"
 
+if (EGVAR(main,readOnly)) exitWith {};
+
 [GVAR(balanceHandle)] call CBA_fnc_removePerFrameHandler;
 [GVAR(rightPanelColor)] call CBA_fnc_removePerFrameHandler;
 
