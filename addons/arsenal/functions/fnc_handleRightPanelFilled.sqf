@@ -5,7 +5,7 @@ if (_leftIDC in [IDC_buttonPrimaryWeapon, IDC_buttonSecondaryWeapon, IDC_buttonH
 	private _ctrlPanel = _display displayCtrl IDC_rightTabContent;
 	private _items = (getUnitLoadout player) call FUNC(items_list);
 	for "_lbIndex" from 0 to (lbSize _ctrlPanel - 1) do {
-		private _class = _ctrlPanel lbData _lbIndex;
+		private _class = configName ((_ctrlPanel lbData _lbIndex) call CBA_fnc_getItemConfig);
 		private _price = [_class] call FUNC(item_price);
 		private _tooltip = if (EGVAR(main,readOnly)) then {
 			format ["%1\nPrice: %2", _class, _price]

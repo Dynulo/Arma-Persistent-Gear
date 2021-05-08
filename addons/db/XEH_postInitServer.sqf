@@ -25,7 +25,7 @@ publicVariable QGVAR(items);
 addMissionEventHandler ["ExtensionCallback", {
 	params ["_name", "_function", "_data"];
 	if !(_name == "dynulo_pmc") exitWith {};
-	systemChat format ["%1(): %2 | %3", _function, _data];
+	// systemChat format ["%1(): %2 | %3", _function, _data];
 	// if !(_function == "item") then {
 	// 	private _parsed = parseSimpleArray _data;
 	// 	systemchat format ["p: %1", _parsed];
