@@ -12,19 +12,28 @@ private _cost = [_items] call FUNC(items_cost);
 if !(_cost == 0) then {
 	// Take carried items
 	player setUnitLoadout [GVAR(preLoadout), false];
-	[_items] call CBA_fnc_deleteNamespace;
 	_items = (getUnitLoadout player) call FUNC(items_list);
 };
 
 [_items] call FUNC(locker_take);
-[_items] call CBA_fnc_deleteNamespace;
+
+GVAR(pendingLockerTakeSuccessHandle) = [QGVAR(locker_take_success), {
+	[QGVAR(locker_store_success), GVAR(pendingLockerTakeSuccessHandle)] call CBA_fnc_removeEventHandler;
+	[QGVAR(locker_store_failed), GVAR(pendingLockerTakeFailedHandle)] call CBA_fnc_removeEventHandler;
+	if !(EGVAR(main,readOnly)) then {
+		[player, getUnitLoadout player] call EFUNC(db,loadout_onChange);
+	};
+}] call CBA_fnc_addEventHandlerArgs;
+GVAR(pendingLockerTakeFailedHandle) = [QGVAR(locker_take_failed), {
+	[QGVAR(locker_store_success), GVAR(pendingLockerTakeSuccessHandle)] call CBA_fnc_removeEventHandler;
+	[QGVAR(locker_store_failed),GVAR(pendingLockerTakeFailedHandle)] call CBA_fnc_removeEventHandler;
+	systemChat "Failed to take items from the locker";
+	player setUnitLoadout BLANK_LOADOUT;
+	if !(EGVAR(main,readOnly)) then {
+		[player, getUnitLoadout player] call EFUNC(db,loadout_onChange);
+	};
+}] call CBA_fnc_addEventHandler;
 
 player setVariable [QGVAR(inArsenal), false, true];
-
-if !(EGVAR(main,readOnly)) then {
-	[player, getUnitLoadout player] call EFUNC(db,loadout_onChange);
-};
-
-call FUNC(locker_save);
-
 player setVariable [QGVAR(balance), 0];
+player setVariable [QGVAR(locker), createHashMap];

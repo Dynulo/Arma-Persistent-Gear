@@ -2,7 +2,7 @@
 
 params ["_class"];
 
-private _ret = 0;
+private _ret = -1;
 
 private _class = toLower _class;
 

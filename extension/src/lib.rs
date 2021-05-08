@@ -12,8 +12,8 @@ extern crate lazy_static;
 extern crate serde;
 
 lazy_static! {
-    static ref HOST: String =
-        std::env::var("DYNULO_PMC_HOST").unwrap_or_else(|_| "https://dev.dynulo.com/pmc".to_string());
+    static ref HOST: String = std::env::var("DYNULO_PMC_HOST")
+        .unwrap_or_else(|_| "https://dev.dynulo.com/pmc".to_string());
     static ref TOKEN: RwLock<String> = RwLock::new(String::new());
 }
 
@@ -21,6 +21,7 @@ mod models;
 
 mod items;
 mod loadouts;
+mod locker;
 mod players;
 mod purchases;
 mod transactions;
@@ -74,8 +75,11 @@ fn save_loadout(player: u64, loadout: String) {
 
 #[rv(thread = true)]
 fn purchase(player: u64, array: String) {
-    match purchases::internal_save(player, array) {
-        Ok(_) => rv_callback!("dynulo_pmc", "purchase_success", player.to_string()),
+    match purchases::internal_save(player, array.clone()) {
+        Ok(_) => {
+            locker_get(player);
+            rv_callback!("dynulo_pmc", "purchase_success", player.to_string())
+        },
         Err(e) => {
             rv_callback!("dynulo_pmc", "purchase_failed", player.to_string());
             error!("Error creating purchase: {}", e);
@@ -92,6 +96,51 @@ fn transaction(player: u64, reason: String, amount: i32) {
         Err(e) => {
             rv_callback!("dynulo_pmc", "transaction_failed", player.to_string());
             error!("Error creating transaction: {}", e);
+        }
+    }
+}
+
+// Locker
+
+#[rv(thread = true)]
+fn locker_get(player: u64) {
+    match locker::internal_get(player) {
+        Ok(items) => {
+            rv_callback!("dynulo_pmc", "locker_new", player.to_string());
+            info!("Found {} items", items.len());
+            for item in items {
+                rv_callback!(
+                    "dynulo_pmc",
+                    "locker_item",
+                    player.to_string(),
+                    item.class,
+                    item.quantity
+                );
+            }
+            rv_callback!("dynulo_pmc", "locker_publish", player.to_string());
+        }
+        Err(e) => error!("error fetching locker: {}", e),
+    }
+}
+
+#[rv(thread = true)]
+fn locker_take(player: u64, array: String) {
+    match locker::internal_take(player, array) {
+        Ok(_) => rv_callback!("dynulo_pmc", "locker_take_success", player.to_string()),
+        Err(e) => {
+            rv_callback!("dynulo_pmc", "locker_take_failed", player.to_string());
+            error!("Error creating purchase: {}", e);
+        }
+    }
+}
+
+#[rv(thread = true)]
+fn locker_store(player: u64, array: String) {
+    match locker::internal_store(player, array) {
+        Ok(_) => rv_callback!("dynulo_pmc", "locker_store_success", player.to_string()),
+        Err(e) => {
+            rv_callback!("dynulo_pmc", "locker_store_failed", player.to_string());
+            error!("Error creating purchase: {}", e);
         }
     }
 }
@@ -123,7 +172,7 @@ fn save_variable(player: u64, key: String, value: String) {
 fn get_items() {
     match items::internal_get() {
         Ok(items) => {
-            rv_callback!("dynulo_pmc", "clear_items", "");
+            rv_callback!("dynulo_pmc", "items_clear", "");
             info!("Found {} items", items.len());
             for item in items {
                 let mut traits = Vec::new();
@@ -132,7 +181,7 @@ fn get_items() {
                 }
                 rv_callback!("dynulo_pmc", "item", item.class, item.cost, traits);
             }
-            rv_callback!("dynulo_pmc", "publish_items", "");
+            rv_callback!("dynulo_pmc", "items_publish", "");
         }
         Err(e) => error!("error fetching items: {}", e),
     }
@@ -148,7 +197,7 @@ fn set_nickname(player: u64, nickname: String) {
 }
 
 #[rv(thread = true)]
-fn get_balance(player: u64) {
+fn balance_get(player: u64) {
     match players::internal_get_balance(player) {
         Ok(balance) => {
             rv_callback!("dynulo_pmc", "balance_success", player.to_string(), balance);

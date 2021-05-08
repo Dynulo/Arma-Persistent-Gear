@@ -8,12 +8,16 @@ if (isServer) then {
 };
 if (isDedicated) exitWith {};
 
+[QGVAR(locker_publish), {
+	params ["_map"];
+	player setVariable [QGVAR(locker), _map];
+}] call CBA_fnc_addEventHandler;
+
 // Init Arsenal Option
 private _action = [QGVAR(shop), "Shop", "", {
 	[_target] call FUNC(addShop);
 }, {
-	// TODO replace with isNotEqualTo
-	!(GVAR(arsenalItems) isEqualTo [])
+	GVAR(arsenalItems) isNotEqualTo []
 }] call ace_interact_menu_fnc_createAction;
 {
 	[_x, 0, ["ACE_MainActions"], _action] call ace_interact_menu_fnc_addActionToObject;

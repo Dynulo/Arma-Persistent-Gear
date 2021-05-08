@@ -13,11 +13,7 @@ pub fn internal_save(player: u64, array: String) -> Result<(), String> {
     let mut purchases = Vec::new();
     for mat in RE.captures_iter(&array) {
         purchases.push(crate::models::Purchase {
-            class: mat
-                .get(1)
-                .unwrap()
-                .as_str()
-                .replace("\"", ""),
+            class: mat.get(1).unwrap().as_str().replace("\"", ""),
             amount: FromStr::from_str(mat.get(2).unwrap().as_str()).unwrap(),
             quantity: FromStr::from_str(mat.get(3).unwrap().as_str()).unwrap(),
         });
@@ -28,7 +24,13 @@ pub fn internal_save(player: u64, array: String) -> Result<(), String> {
         .json(&purchases)
         .send()
     {
-        Ok(_) => Ok(()),
+        Ok(resp) => {
+            if resp.status().is_success() {
+                Ok(())
+            } else {
+                Err(resp.status().to_string())
+            }
+        },
         Err(e) => Err(e.to_string()),
     }
 }

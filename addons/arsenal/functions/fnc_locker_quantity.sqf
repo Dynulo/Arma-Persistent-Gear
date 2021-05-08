@@ -1,5 +1,8 @@
 #include "script_component.hpp"
 
-params ["_class"];
+/*
+ * Return the count of an item stored in the locker
+ */
 
-GVAR(locker) getVariable [[_class] call FUNC(item_listing), 0]
+params ["_class"];
+(player getVariable [QGVAR(locker), createHashMap]) getOrDefault [_class, 0]

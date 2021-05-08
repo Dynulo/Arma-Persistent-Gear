@@ -24,7 +24,13 @@ pub fn internal_save(player: u64, nickname: String) -> Result<(), String> {
         .body(nickname)
         .send()
     {
-        Ok(_) => Ok(()),
+        Ok(resp) => {
+            if resp.status().is_success() {
+                Ok(())
+            } else {
+                Err(resp.status().to_string())
+            }
+        },
         Err(e) => Err(e.to_string()),
     }
 }

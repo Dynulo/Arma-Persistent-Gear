@@ -1,10 +1,11 @@
 #include "script_component.hpp"
 
+/*
+ * Takes the items from the remote locker
+ */
+
+if (EGVAR(main,readOnly)) exitWith {};
+
 params ["_items"];
 
-{
-	GVAR(locker) setVariable [_x,
-		// owned - (# to take)
-		([_x] call FUNC(locker_quantity)) - (_items getVariable [_x, 0])
-	];
-} forEach allVariables _items;
+[EXT, ["locker_take", [getPlayerUID player, str _items]]] remoteExec ["callExtension", REMOTE_SERVER];

@@ -8,7 +8,13 @@ pub fn internal_save(player: u64, reason: String, amount: i32) -> Result<(), Str
         .json(&crate::models::Transaction { reason, amount })
         .send()
     {
-        Ok(_) => Ok(()),
+        Ok(resp) => {
+            if resp.status().is_success() {
+                Ok(())
+            } else {
+                Err(resp.status().to_string())
+            }
+        },
         Err(e) => Err(e.to_string()),
     }
 }

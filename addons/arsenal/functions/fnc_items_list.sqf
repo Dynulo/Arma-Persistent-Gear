@@ -2,12 +2,12 @@
 
 /*
  * Takes a getUnitLoadout array
- * returns a CBA namespace containing all the items and the quantity of each
+ * returns a hashmap containing all the items and the quantity of each
  */
 
 private _loadout = _this;
 
-private _items = call CBA_fnc_createNamespace;
+private _items = createHashMap;
 
 _fnc_addItem = {
 	params ["_item", ["_count", 1]];
@@ -16,8 +16,8 @@ _fnc_addItem = {
 			_count = 1;
 		};
 		private _base = [_item] call FUNC(item_listing);
-		private _existing = _items getVariable [_base, 0];
-		_items setVariable [_base, _existing + _count];
+		private _existing = _items getOrDefault [_base, 0];
+		_items set [_base, _existing + _count];
 	};
 };
 
@@ -42,7 +42,7 @@ _fnc_addWeapon = {
 
 _fnc_addContainer = {
 	params ["_containerArray"];
-	if (_containerArray isEqualTo []) exitWith {}; 
+	if (_containerArray isEqualTo []) exitWith {};
 	[_containerArray select 0] call _fnc_addItem;
 	{
 		switch (count _x) do {
@@ -62,7 +62,7 @@ _fnc_addContainer = {
 	} forEach (_containerArray select 1);
 };
 
-// Primary 
+// Primary
 [_loadout select 0] call _fnc_addWeapon;
 
 // Secondary

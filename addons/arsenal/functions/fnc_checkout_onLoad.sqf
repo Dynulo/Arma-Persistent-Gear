@@ -38,6 +38,13 @@ private _fnc_onConfirm = {
 
 	private _items = (getUnitLoadout player) call FUNC(items_list);
 	[_items] call FUNC(items_buy);
-	[_items] call CBA_fnc_deleteNamespace;
 };
-(_display displayCtrl 1) ctrlAddEventHandler ["buttonclick", _fnc_onConfirm];
+
+private _cost = [_items] call FUNC(items_cost);
+private _balance = player getVariable [QGVAR(balance), 0];
+if (_cost > _balance) then {
+	(_display displayCtrl 1) ctrlEnable false;
+	(_display displayCtrl 1001) ctrlSetText "Insufficient Funds";
+} else {
+	(_display displayCtrl 1) ctrlAddEventHandler ["buttonclick", _fnc_onConfirm];
+};

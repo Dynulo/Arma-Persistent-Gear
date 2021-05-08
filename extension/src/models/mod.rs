@@ -1,6 +1,9 @@
 mod loadout;
 pub use loadout::Loadout;
 
+mod locker;
+pub use locker::Locker;
+
 mod purchase;
 pub use purchase::Purchase;
 

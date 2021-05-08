@@ -28,7 +28,13 @@ pub fn internal_save(player: u64, loadout: String) -> Result<(), String> {
         .json(&map)
         .send()
     {
-        Ok(_) => Ok(()),
+        Ok(resp) => {
+            if resp.status().is_success() {
+                Ok(())
+            } else {
+                Err(resp.status().to_string())
+            }
+        },
         Err(e) => Err(e.to_string()),
     }
 }

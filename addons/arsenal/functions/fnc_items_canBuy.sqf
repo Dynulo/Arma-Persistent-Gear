@@ -2,15 +2,15 @@
 
 params ["_items"];
 
-private _cost = 0;
+private _invalid = [];
 
 {
-	// (desired) - (already owned)
 	private _need = (_items getOrDefault [_x, 0]) - ([_x] call FUNC(locker_quantity));
 	if (_need > 0) then {
-		private _price = [_x] call FUNC(item_price);
-		_cost = _cost + (_price * _need);
+		if (([_x] call FUNC(item_price)) == -1) exitWith {
+			_invalid pushBack _x;
+		};
 	};
 } forEach keys _items;
 
-_cost
+_invalid

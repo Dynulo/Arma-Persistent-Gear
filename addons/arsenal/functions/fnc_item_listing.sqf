@@ -11,9 +11,9 @@ if !(_shopClass isEqualTo []) exitWith {
 };
 
 // Handles CBA disposable rockets
-private _launcherCheck = (tolower _class) splitString "_";
+private _launcherCheck = _class splitString "_";
 if (count _launcherCheck > 0) then {
-	if ((_launcherCheck select (count _launcherCheck - 1)) isEqualTo "loaded") then {
+	if ((tolower (_launcherCheck select (count _launcherCheck - 1))) isEqualTo "loaded") then {
 		_launcherCheck deleteAt (count _launcherCheck - 1);
 		_launcherCheck = _launcherCheck joinString "_";
 		private _shopClass = _launcherCheck call FUNC(item_get);
@@ -47,7 +47,7 @@ private _acreCheck = (tolower _class) splitString "_";
 if (count _acreCheck == 4) then {
 	if (_acreCheck select 0 isEqualTo "acre") then {
 		if (_acreCheck select 2 isEqualTo "id") then {
-			_ret = format ["acre_%1", _acreCheck select 1];
+			_ret = toupper format ["acre_%1", _acreCheck select 1];
 		};
 	};
 };

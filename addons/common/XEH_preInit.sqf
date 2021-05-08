@@ -3,7 +3,6 @@ ADDON = false;
 #include "XEH_PREP.hpp"
 
 EGVAR(main,enabled) = false;
-GVAR(serverReady) = false;
 
 [
     QEGVAR(main,enabled),

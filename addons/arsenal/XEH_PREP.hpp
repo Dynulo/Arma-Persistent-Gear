@@ -13,13 +13,13 @@ PREP(item_listing);
 PREP(item_price);
 
 PREP(items_buy);
+PREP(items_canBuy);
 PREP(items_cost);
 PREP(items_difference);
 PREP(items_list);
 
-PREP(locker_add);
 PREP(locker_quantity);
-PREP(locker_save);
+PREP(locker_store);
 PREP(locker_take);
 
 PREP(addShop);
@@ -28,3 +28,5 @@ PREP(populateItems);
 
 PREP(sortStatement_owned);
 PREP(sortStatement_price);
+
+PREP(onInventoryOpen);

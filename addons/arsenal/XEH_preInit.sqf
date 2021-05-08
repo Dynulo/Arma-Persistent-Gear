@@ -4,10 +4,8 @@ ADDON = false;
 ADDON = true;
 
 GVAR(pendingPurchase) = false;
+GVAR(pendingOpenShop) = false;
 
 // Objects with access to the PMC arsenal
 GVAR(boxes) = [];
 GVAR(arsenalItems) = [];
-
-// Track owned items
-GVAR(locker) = call CBA_fnc_createNamespace;
