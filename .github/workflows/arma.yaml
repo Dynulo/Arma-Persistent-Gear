@@ -22,10 +22,11 @@ jobs:
         run: cargo build --release
         env:
           - CARGO_TARGET_DIR: target
-      - uses: actions/upload-artifact@v2
-      with:
-        name: image
-        path: target
-        if-no-files-found: error
-        retention-days: 7
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: image
+          path: target
+          if-no-files-found: error
+          retention-days: 7
 
