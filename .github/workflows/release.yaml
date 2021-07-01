@@ -6,28 +6,78 @@ on:
       - published
 
 jobs:
-  build_addon:
+  build_extension:
+    strategy:
+      matrix:
+        arrays: [
+          os: { tag: "ubuntu-latest", lib: "libdynulo_pmc.so", target: "i686-unknown-linux-gnu" },
+          os: { tag: "ubuntu-latest", lib: "libdynulo_pmc.so", target: "x86_64-unknown-linux-gnu" },
+          os: { tag: "windows-latest", lib: "dynulo_pmc.dll", target: "i686-pc-windows-msvc" },
+          os: { tag: "windows-latest", lib: "dynulo_pmc.dll", target: "x86_64-pc-windows-msvc" },
+        ]
+    runs-on: ${{ matrix.arrays.os.tag }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Install latest
+        uses: actions-rs/toolchain@v1
+        with:
+          target: ${{ matrix.arrays.os.target }}
+          toolchain: stable
+      - name: Install 32bit packages
+        run: sudo apt-get install gcc-multilib
+        if: ${{ matrix.arrays.os.target == 'i686-unknown-linux-gnu' }}
+      - name: Cargo Build
+        run: cd extension && cargo build --release --target ${{ matrix.arrays.os.target }}
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.arrays.os.target }}
+          path: extension/target/${{ matrix.arrays.os.target }}/release/${{ matrix.arrays.os.lib }}
+          if-no-files-found: error
+          retention-days: 30
+  package:
+    needs: build_extension
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Set VERSION env
-      run: echo VERSION=${GITHUB_REF:11} >> $GITHUB_ENV
-    - name: Build addon with HEMTT
-      uses: arma-actions/hemtt
-      with:
-        command: 'build --release'
-    # Upload to GitHub
-    - uses: softprops/action-gh-release@v1
-      with:
-        files: 'releases/pmc_${{ env.VERSION }}.zip'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    # Upload to Steam Workshop
-    - uses: arma-actions/workshop-upload@v1
-      with:
-        itemId: '2347071898' # Id of item to update
-        contentPath: 'releases/${{ env.VERSION }}/@pmc'
-        changelog: 'https://github.com/Dynulo/ArmaPMC/releases/tag/v${{ env.VERSION }}'
-      env:
-        STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
-        STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
+      - uses: actions/checkout@v1
+      
+      - uses: actions/download-artifact@v2
+        with:
+          name: i686-unknown-linux-gnu
+      - uses: actions/download-artifact@v2
+        with:
+          name: x86_64-unknown-linux-gnu
+      - uses: actions/download-artifact@v2
+        with:
+          name: i686-pc-windows-msvc
+      - uses: actions/download-artifact@v2
+        with:
+          name: x86_64-pc-windows-msvc
+
+      - name: Set VERSION env
+        run: echo VERSION=${GITHUB_REF:11} >> $GITHUB_ENV
+      - name: Build addon with HEMTT
+        uses: arma-actions/hemtt@master
+        with:
+          command: 'build --release'
+      - uses: actions/upload-artifact@v2
+        with:
+          name: armapmc.zip
+          path: 'releases/pmc_${{ env.VERSION }}.zip'
+        # Upload to GitHub
+        - uses: softprops/action-gh-release@v1
+          with:
+            files: 'releases/pmc_${{ env.VERSION }}.zip'
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Upload to Steam Workshop
+      - uses: arma-actions/workshop-upload@v1
+        if: 
+        with:
+          itemId: '2347071898' # Id of item to update
+          contentPath: 'releases/${{ env.VERSION }}/@pmc'
+          changelog: 'https://github.com/Dynulo/ArmaPMC/releases/tag/v${{ env.VERSION }}'
+        env:
+          STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
+          STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
