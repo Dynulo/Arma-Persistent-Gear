@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.arrays.os.tag }}
-          path: extension/target/${{ matrix.arrays.os.tag }}/release/dynulo_pmc${{ matrix.arrays.os.ext }}
+          path: extension/target/${{ matrix.arrays.os.target }}/release/dynulo_pmc${{ matrix.arrays.os.ext }}
           if-no-files-found: error
           retention-days: 30
   package:
