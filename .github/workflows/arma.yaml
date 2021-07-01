@@ -11,10 +11,10 @@ jobs:
     strategy:
       matrix:
         arrays: [
-          os: { tag: "ubuntu-latest", ext: ".so", target: "i686-unknown-linux-gnu" },
-          os: { tag: "ubuntu-latest", ext: ".so", target: "x86_64-unknown-linux-gnu" },
-          os: { tag: "windows-latest", ext: ".dll", target: "i686-pc-windows-msvc" },
-          os: { tag: "windows-latest", ext: ".dll", target: "x86_64-pc-windows-msvc" },
+          os: { tag: "ubuntu-latest", lib: "libdynulo_pmc.so", target: "i686-unknown-linux-gnu" },
+          os: { tag: "ubuntu-latest", lib: "libdynulo_pmc.so", target: "x86_64-unknown-linux-gnu" },
+          os: { tag: "windows-latest", lib: "dynulo_pmc.dll", target: "i686-pc-windows-msvc" },
+          os: { tag: "windows-latest", lib: "dynulo_pmc.dll", target: "x86_64-pc-windows-msvc" },
         ]
     runs-on: ${{ matrix.arrays.os.tag }}
     steps:
@@ -26,14 +26,14 @@ jobs:
           target: ${{ matrix.arrays.os.target }}
           toolchain: stable
       - name: Cargo Build
-        run: cd extension && cargo build --release
+        run: cd extension && cargo build --release --target ${{ matrix.arrays.os.target }}
       - name: Tree
         run: tree
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.arrays.os.tag }}
-          path: target/${{ matrix.arrays.os.target }}/release/dynulo_pmc${{ matrix.arrays.os.ext }}
+          path: extension/target/${{ matrix.arrays.os.target }}/release/${{ matrix.arrays.os.lib }}
           if-no-files-found: error
           retention-days: 30
   package:
