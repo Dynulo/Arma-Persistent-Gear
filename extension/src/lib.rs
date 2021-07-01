@@ -179,7 +179,7 @@ fn get_items() {
                 for trait_ in item.traits.split('|') {
                     traits.push(trait_.to_string());
                 }
-                rv_callback!("dynulo_pmc", "item", item.class, item.cost, traits);
+                rv_callback!("dynulo_pmc", "item", item.class, item.cost, traits, item.global as i32);
             }
             rv_callback!("dynulo_pmc", "items_publish", "");
         }

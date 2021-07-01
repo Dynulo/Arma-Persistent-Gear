@@ -49,6 +49,7 @@ private _items = (getUnitLoadout player) call FUNC(items_list);
 	private _items = +GVAR(arsenalItems);
 	_items append (keys (player getVariable [QGVAR(locker), createHashMap]));
 	_items = _items - ["ItemRadioAcreFlagged"];
+	GVAR(inShop) = true;
 	[_object, _items, false] call ace_arsenal_fnc_initBox;
 	[_object, player] call ace_arsenal_fnc_openBox;
 	[_object, false] call ace_arsenal_fnc_removeBox;

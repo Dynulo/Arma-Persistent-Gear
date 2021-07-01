@@ -1,6 +1,7 @@
 #include "script_component.hpp"
 
 if (EGVAR(main,readOnly)) exitWith {};
+if !(GVAR(inShop)) exitWith {};
 
 params ["_display"];
 

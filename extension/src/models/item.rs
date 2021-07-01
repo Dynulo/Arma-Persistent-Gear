@@ -3,4 +3,5 @@ pub struct Item {
     pub class: String,
     pub cost: i32,
     pub traits: String,
+    pub global: bool,
 }

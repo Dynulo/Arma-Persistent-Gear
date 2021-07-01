@@ -51,18 +51,6 @@ GVAR(oldVars) = createHashMap;
 		[[true]] call ace_hearing_fnc_updateVolume;
 		[] call ace_hearing_fnc_updateHearingProtection;
 	};
-	if (_key isEqualTo QEGVAR(arsenal,locker)) then {
-		private _to_store = createHashMap;
-		{
-			_x splitString ":" params ["_class", "_quantity"];
-			if (_class isNotEqualTo "itemradioacreflagged" && {_class isNotEqualTo ""}) then {
-				_class = configName (_class call CBA_fnc_getItemConfig);
-				_to_store set [_class, parseNumber (_quantity)];
-			};
-		} forEach (_val splitString "|");
-		[_to_store] call EFUNC(arsenal,locker_store);
-		[getPlayerUID player, "pmc_arsenal_locker", ""] remoteExec [QFUNC(variable_save), REMOTE_SERVER];
-	};
 
 	call EFUNC(arsenal,populateItems);
 }] call CBA_fnc_addEventHandler;

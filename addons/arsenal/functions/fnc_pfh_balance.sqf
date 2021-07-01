@@ -27,7 +27,7 @@ private _cost = [_items] call FUNC(items_cost);
 private _balance = player getVariable [QGVAR(balance), 0];
 if (_cost == 0) then {
 	_btnHide ctrlEnable false;
-	_btnHide ctrlSetText format ["Balance: %1", _balance];
+	_btnHide ctrlSetText format ["0 / %1", _balance];
 	_btnHide ctrlSetTooltip "Current PMC Balance";
 	_btnClose ctrlSetText "Apply";
 } else {
@@ -37,7 +37,8 @@ if (_cost == 0) then {
 		// } else {
 		_btnHide ctrlEnable true;
 		// };
-		_btnHide ctrlSetText format ["Purchase: %1 / %2", _cost, _balance];
+		private _cost = [_items, 0] call FUNC(items_cost);
+		_btnHide ctrlSetText format ["%1 / %2", _cost, _balance];
 		_btnHide ctrlSetTooltip "Buy Current Gear";
 		_btnClose ctrlSetText "Cancel";
 	} else {

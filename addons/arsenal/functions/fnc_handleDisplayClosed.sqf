@@ -1,6 +1,7 @@
 #include "script_component.hpp"
 
 if (EGVAR(main,readOnly)) exitWith {};
+if !(GVAR(inShop)) exitWith {};
 
 [GVAR(balanceHandle)] call CBA_fnc_removePerFrameHandler;
 [GVAR(rightPanelColor)] call CBA_fnc_removePerFrameHandler;
@@ -37,3 +38,5 @@ GVAR(pendingLockerTakeFailedHandle) = [QGVAR(locker_take_failed), {
 player setVariable [QGVAR(inArsenal), false, true];
 player setVariable [QGVAR(balance), 0];
 player setVariable [QGVAR(locker), createHashMap];
+
+GVAR(inShop = false);

@@ -9,6 +9,7 @@ PREP(handleRightPanelFilled);
 
 PREP(item_canUse);
 PREP(item_get);
+PREP(item_global);
 PREP(item_listing);
 PREP(item_price);
 

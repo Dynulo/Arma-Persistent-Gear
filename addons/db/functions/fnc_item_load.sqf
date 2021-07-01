@@ -1,8 +1,8 @@
 #include "script_component.hpp"
 
-params ["_class", "_price", "_traits"];
+params ["_class", "_price", "_traits", "_global"];
 
-GVAR(items) pushBack [_class, [_price, _traits]];
+GVAR(items) pushBack [_class, [_price, _traits, _global]];
 
 {
 	if (_x isEqualTo "") exitWith {};
