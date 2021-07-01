@@ -68,13 +68,13 @@ jobs:
         with:
           name: armapmc.zip
           path: 'releases/pmc.zip'
-        # Upload to GitHub
-        - uses: softprops/action-gh-release@v1
-          with:
-            files: 'releases/pmc.zip'
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # Upload to Steam Workshop
+      # Upload to GitHub
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: 'releases/pmc.zip'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Upload to Steam Workshop
       - run: unzip releases/pmc.zip -d ./unzipped
       - uses: arma-actions/workshop-upload@v1
         with:
