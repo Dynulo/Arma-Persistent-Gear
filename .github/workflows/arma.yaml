@@ -27,6 +27,8 @@ jobs:
           toolchain: stable
       - name: Cargo Build
         run: cd extension && cargo build --release
+      - name: Tree
+        run: tree
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
