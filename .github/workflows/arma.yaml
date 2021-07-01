@@ -10,25 +10,26 @@ jobs:
   build_extension:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        arch: [32bit, 64bit]
-    runs-on: ${{ matrix.os }}
-    env:
-      CARGO_TARGET_DIR: target
+        arrays: [
+          os: { tag: "ubuntu-latest", ext: ".so", target: ["i686-pc-windows-msvc", "x86_64-pc-windows-msvc"]},
+          os: { tag: "windows-latest", ext: ".dll", target: ["i686-unknown-linux-gnu", "x86_64-unknown-linux-gnu"]},
+        ]
+    runs-on: ${{ matrix.arrays.os.tag }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-      - name: Install latest nightly
+      - name: Install latest
         uses: actions-rs/toolchain@v1
         with:
+          target: ${{ matrix.arrays.os.target }}
           toolchain: stable
       - name: Cargo Build
         run: cd extension && cargo build --release
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
-          name: image
-          path: target
+          name: ${{ matrix.arrays.os.tag }}
+          path: extension/target/release/dynulo_pmc${{ matrix.arrays.os.ext }}
           if-no-files-found: error
-          retention-days: 7
+          retention-days: 30
 
