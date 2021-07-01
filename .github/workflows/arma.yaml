@@ -35,7 +35,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.arrays.os.tag }}
+          name: ${{ matrix.arrays.os.target }}
           path: extension/target/${{ matrix.arrays.os.target }}/release/${{ matrix.arrays.os.lib }}
           if-no-files-found: error
           retention-days: 30
