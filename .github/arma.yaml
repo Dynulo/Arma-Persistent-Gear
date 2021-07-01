@@ -1,0 +1,29 @@
+name: Arma
+
+on:
+  push: main
+  pull_request: main
+
+jobs:
+  build_extension:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        arch: [32bit, 64bit]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Install latest nightly
+        uses: actions-rs/toolchain@v1
+      - name: Cargo Build
+        run: cargo build --release
+        env:
+          - CARGO_TARGET_DIR: target
+      - uses: actions/upload-artifact@v2
+      with:
+        name: image
+        path: target
+        if-no-files-found: error
+        retention-days: 7
+
