@@ -30,8 +30,6 @@ jobs:
         if: ${{ matrix.arrays.os.target == 'i686-unknown-linux-gnu' }}
       - name: Cargo Build
         run: cd extension && cargo build --release --target ${{ matrix.arrays.os.target }}
-      - name: Tree
-        run: tree
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
@@ -48,22 +46,22 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: i686-unknown-linux-gnu
-      - run: mv i686-unknown-linux-gnu dynulo_pmc.so
+          path: dynulo_pmc.so
       
       - uses: actions/download-artifact@v2
         with:
           name: x86_64-unknown-linux-gnu
-      - run: mv x86_64-unknown-linux-gnu dynulo_pmc_x64.so
+          path: dynulo_pmc_x64.so
       
       - uses: actions/download-artifact@v2
         with:
           name: i686-pc-windows-msvc
-      - run: mv i686-pc-windows-msvc dynulo_pmc.dll
+          path: dynulo_pmc.dll
       
       - uses: actions/download-artifact@v2
         with:
           name: x86_64-pc-windows-msvc
-      - run: mv x86_64-pc-windows-msvc dynulo_pmc_x64.dll
+          path: dynulo_pmc_x64.dll
 
       - name: Set VERSION env
         run: echo VERSION=${GITHUB_REF:11} >> $GITHUB_ENV
