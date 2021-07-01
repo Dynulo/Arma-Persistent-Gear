@@ -46,22 +46,15 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: i686-unknown-linux-gnu
-          path: dynulo_pmc.so
-      
       - uses: actions/download-artifact@v2
         with:
           name: x86_64-unknown-linux-gnu
-          path: dynulo_pmc_x64.so
-      
       - uses: actions/download-artifact@v2
         with:
           name: i686-pc-windows-msvc
-          path: dynulo_pmc.dll
-      
       - uses: actions/download-artifact@v2
         with:
           name: x86_64-pc-windows-msvc
-          path: dynulo_pmc_x64.dll
 
       - name: Set VERSION env
         run: echo VERSION=${GITHUB_REF:11} >> $GITHUB_ENV
