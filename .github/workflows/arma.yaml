@@ -64,5 +64,5 @@ jobs:
           command: 'build --release'
       - uses: actions/upload-artifact@v2
         with:
-          name: armapmc.zip
-          path: 'releases/pmc_${{ env.VERSION }}.zip'
+          name: pmc.zip
+          path: 'releases/pmc.zip'

@@ -64,19 +64,19 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: armapmc.zip
-          path: 'releases/pmc_${{ env.VERSION }}.zip'
+          path: 'releases/pmc.zip'
         # Upload to GitHub
         - uses: softprops/action-gh-release@v1
           with:
-            files: 'releases/pmc_${{ env.VERSION }}.zip'
+            files: 'releases/pmc.zip'
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # Upload to Steam Workshop
+      - run: unzip releases/pmc.zip -d ./unzipped
       - uses: arma-actions/workshop-upload@v1
-        if: 
         with:
           itemId: '2347071898' # Id of item to update
-          contentPath: 'releases/${{ env.VERSION }}/@pmc'
+          contentPath: 'unzipped'
           changelog: 'https://github.com/Dynulo/ArmaPMC/releases/tag/v${{ env.VERSION }}'
         env:
           STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
