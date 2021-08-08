@@ -8,8 +8,6 @@ if (EGVAR(main,readOnly)) exitWith {
 	[_object, false] call ace_arsenal_fnc_removeBox;
 };
 
-if (player getVariable [QGVAR(balance), -1] == -1) exitWith {};
-
 if (GVAR(pendingOpenShop)) exitWith {};
 GVAR(pendingOpenShop) = true;
 
