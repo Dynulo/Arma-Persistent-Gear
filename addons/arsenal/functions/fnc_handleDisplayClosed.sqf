@@ -36,7 +36,7 @@ GVAR(pendingLockerTakeFailedHandle) = [QGVAR(locker_take_failed), {
 }] call CBA_fnc_addEventHandler;
 
 player setVariable [QGVAR(inArsenal), false, true];
-player setVariable [QGVAR(balance), 0];
+player setVariable [QGVAR(balance), -1];
 player setVariable [QGVAR(locker), createHashMap];
 
 GVAR(inShop = false);

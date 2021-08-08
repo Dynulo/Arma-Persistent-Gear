@@ -8,6 +8,8 @@ if (EGVAR(main,readOnly)) exitWith {
 	[_object, false] call ace_arsenal_fnc_removeBox;
 };
 
+if (player getVariable [QGVAR(balance), -1] == -1) exitWith {};
+
 if (GVAR(pendingOpenShop)) exitWith {};
 GVAR(pendingOpenShop) = true;
 
@@ -41,7 +43,7 @@ private _items = (getUnitLoadout player) call FUNC(items_list);
 	_args params ["_object"];
 
 	// Checks
-	if (player getVariable [QGVAR(balance), 0] == 0) exitWith {};
+	if (player getVariable [QGVAR(balance), -1] == -1) exitWith {};
 	if (count (player getVariable [QGVAR(locker), createHashMap]) == 0) exitWith {};
 
 	// Open Shop

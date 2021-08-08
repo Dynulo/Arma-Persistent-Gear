@@ -24,7 +24,7 @@ if (_invalid isNotEqualTo []) exitWith {
 
 private _cost = [_items] call FUNC(items_cost);
 
-private _balance = player getVariable [QGVAR(balance), 0];
+private _balance = player getVariable [QGVAR(balance), -1];
 if (_cost == 0) then {
 	_btnHide ctrlEnable false;
 	_btnHide ctrlSetText format ["0 / %1", _balance];
