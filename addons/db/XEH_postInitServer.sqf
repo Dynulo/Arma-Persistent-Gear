@@ -108,6 +108,7 @@ EXT callExtension "get_items";
 
 [{
 	missionNamespace setVariable [QGVAR(serverReady), true, true];
+	[QGVAR(serverReady)] call CBA_fnc_globalEvent;
 }, [], 3] call CBA_fnc_waitAndExecute;
 
 INFO("setup complete");

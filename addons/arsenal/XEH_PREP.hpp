@@ -6,6 +6,7 @@ PREP(handleDisplayClosed);
 PREP(handleDisplayOpened);
 PREP(handleLeftPanelFilled);
 PREP(handleRightPanelFilled);
+PREP(handleLoadoutsListFilled);
 
 PREP(item_canUse);
 PREP(item_get);
@@ -18,6 +19,8 @@ PREP(items_canBuy);
 PREP(items_cost);
 PREP(items_difference);
 PREP(items_list);
+
+PREP(loadout_cost);
 
 PREP(locker_quantity);
 PREP(locker_store);

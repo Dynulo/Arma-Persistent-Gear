@@ -5,6 +5,7 @@ ADDON = true;
 
 GVAR(pendingPurchase) = false;
 GVAR(pendingOpenShop) = false;
+GVAR(inShop) = false;
 
 // Objects with access to the PMC arsenal
 GVAR(boxes) = [];

@@ -9,7 +9,7 @@ _display displayAddEventHandler ["Unload", {
 [findDisplay 1127001] call ace_arsenal_fnc_buttonHide;
 
 private _header = _display displayCtrl IDC_RSCDISPLAYCHECKOUT_HEADER;
-_header lnbAddRow ["","Item","#","Price","Total"];
+_header lnbAddRow ["", "Item", "#", "Price", "Total"];
 _header ctrlEnable false;
 
 private _list = _display displayCtrl IDC_RSCDISPLAYCHECKOUT_ITEMS;
@@ -18,7 +18,7 @@ private _items = (getUnitLoadout player) call FUNC(items_list);
 {
 	_x params ["_item", "_price", "_need", "_total", "_global"];
 	if (_price != 0) then {
-		private _config = (_item call CBA_fnc_getItemConfig);
+		private _config = _item call CBA_fnc_getItemConfig;
 		private _name = getText (_config >> "displayName");
 		private _index = _list lnbAddRow [
 			"",

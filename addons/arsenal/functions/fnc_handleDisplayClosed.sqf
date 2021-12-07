@@ -39,4 +39,4 @@ player setVariable [QGVAR(inArsenal), false, true];
 player setVariable [QGVAR(balance), -1];
 player setVariable [QGVAR(locker), createHashMap];
 
-GVAR(inShop = false);
+GVAR(inShop) = false;

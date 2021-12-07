@@ -30,6 +30,7 @@ player setVariable [QGVAR(inArsenal), false, true];
 ["ace_arsenal_displayClosed", FUNC(handleDisplayClosed)] call CBA_fnc_addEventHandler;
 ["ace_arsenal_leftPanelFilled", FUNC(handleLeftPanelFilled)] call CBA_fnc_addEventHandler;
 ["ace_arsenal_rightPanelFilled", FUNC(handleRightPanelFilled)] call CBA_fnc_addEventHandler;
+["ace_arsenal_loadoutsListFilled", FUNC(handleLoadoutsListFilled)] call CBA_fnc_addEventHandler;
 
 // Init ACE Stats
 
