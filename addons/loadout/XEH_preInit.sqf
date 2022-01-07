@@ -22,18 +22,16 @@ if (isServer) then {
 
 		switch (_function) do {
 			case "features:persistent-gear:player:loadout:fetch": {
-				private _data = parseSimpleArray _data;
-				private _cmd = _data select 0;
-				private _player = [_data select 1] call EFUNC(common,findFromSteam);
+				(parseSimpleArray _data) params ["_cmd", "_steam", "_loadout"];
 				switch (_cmd) do {
 					case "loaded": {
-						[QGVAR(loaded), [parseSimpleArray (_data select 2)], _player] call CBA_fnc_targetEvent;
+						[QGVAR(loaded), [parseSimpleArray _loadout, _player]] call CBA_fnc_globalEvent;
 					};
 					case "empty": {
-						[QGVAR(loaded), [BLANK_LOADOUT], _player] call CBA_fnc_targetEvent;
+						[QGVAR(loaded), [BLANK_LOADOUT, _player]] call CBA_fnc_globalEvent;
 					};
 					case "error": {
-						[QGVAR(loadError), [], _player] call CBA_fnc_targetEvent;
+						[QGVAR(loadError), [_player]] call CBA_fnc_globalEvent;
 					};
 				};
 			};
@@ -69,7 +67,8 @@ if (hasInterface) then {
 	}] call CBA_fnc_addEventHandler;
 
 	[QGVAR(loaded), {
-		params ["_loadout"];
+		params ["_loadout", "_steam"];
+		if (_steam isNotEqualTo (getPlayerUID player)) exitWith {};
 		player setUnitLoadout [_loadout, false];
 		[{
 			player setVariable [QGVAR(loaded), true, true];
@@ -78,6 +77,8 @@ if (hasInterface) then {
 	}] call CBA_fnc_addEventHandler;
 
 	[QGVAR(loadError), {
+		params ["_steam"];
+		if (_steam isNotEqualTo (getPlayerUID player)) exitWith {};
 		systemChat "Error loading loadout, abort and retry, or contact your server admin.";
 	}] call CBA_fnc_addEventHandler;
 

@@ -4,7 +4,7 @@ params ["_items"];
 
 private _ret = [];
 
-private _me = ([getPlayerUID player] call core_discord_fnc_findMemberFromSteam) select 3;
+private _my_roles = ([getPlayerUID player] call core_discord_fnc_findMemberFromSteam) select 3;
 
 {
 	private _roles = [_x] call FUNC(item_roles);
