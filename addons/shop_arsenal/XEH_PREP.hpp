@@ -1,0 +1,17 @@
+PREP(arsenal_DisplayClosed);
+PREP(arsenal_DisplayOpened);
+PREP(arsenal_LeftPanelFilled);
+PREP(arsenal_LoadoutsPanelFilled);
+PREP(arsenal_RightPanelFilled);
+PREP(btnHide_onClick);
+PREP(create_actions);
+PREP(handleLoadClient);
+PREP(handleLoaderError);
+PREP(handleLoaderReady);
+PREP(handleLoaderRegister);
+PREP(onInventoryOpen);
+PREP(open);
+PREP(pfh_balance);
+PREP(sortStatement_owned);
+PREP(sortStatement_price);
+PREP(checkout_onLoad);

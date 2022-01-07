@@ -1,0 +1,11 @@
+PREP(handleLoadClient);
+PREP(handleLoadServer);
+PREP(handleUnload);
+PREP(item_global);
+PREP(item_listing);
+PREP(item_price);
+PREP(item_roles);
+PREP(items_can_purchase);
+PREP(items_cost);
+PREP(items_difference);
+PREP(items_allowed);
