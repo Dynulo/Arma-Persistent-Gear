@@ -25,13 +25,13 @@ if (isServer) then {
 				(parseSimpleArray _data) params ["_cmd", "_steam", "_loadout"];
 				switch (_cmd) do {
 					case "loaded": {
-						[QGVAR(loaded), [parseSimpleArray _loadout, _player]] call CBA_fnc_globalEvent;
+						[QGVAR(loaded), [parseSimpleArray _loadout, _steam]] call CBA_fnc_globalEvent;
 					};
 					case "empty": {
-						[QGVAR(loaded), [BLANK_LOADOUT, _player]] call CBA_fnc_globalEvent;
+						[QGVAR(loaded), [BLANK_LOADOUT, _steam]] call CBA_fnc_globalEvent;
 					};
 					case "error": {
-						[QGVAR(loadError), [_player]] call CBA_fnc_globalEvent;
+						[QGVAR(loadError), [_steam]] call CBA_fnc_globalEvent;
 					};
 				};
 			};
@@ -68,9 +68,11 @@ if (hasInterface) then {
 
 	[QGVAR(loaded), {
 		params ["_loadout", "_steam"];
-		if (_steam isNotEqualTo (getPlayerUID player)) exitWith {};
+		if ((_steam isNotEqualTo (getPlayerUID player))) exitWith {};
+		if (player getVariable [QEGVAR(shop_arsenal,inArsenal), false]) exitWith {};
 		player setUnitLoadout [_loadout, false];
 		[{
+			player addGoggles (_loadout select 7);
 			player setVariable [QGVAR(loaded), true, true];
 			GVAR(tracking) = true;
 		}] call CBA_fnc_execNextFrame;
@@ -78,8 +80,9 @@ if (hasInterface) then {
 
 	[QGVAR(loadError), {
 		params ["_steam"];
-		if (_steam isNotEqualTo (getPlayerUID player)) exitWith {};
-		systemChat "Error loading loadout, abort and retry, or contact your server admin.";
+		if (_steam isNotEqualTo (getPlayerUID player)) then {
+			systemChat "Error loading loadout, abort and retry, or contact your server admin.";
+		};
 	}] call CBA_fnc_addEventHandler;
 
 	[QGVAR(stored), {

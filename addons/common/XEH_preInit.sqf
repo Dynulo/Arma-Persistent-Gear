@@ -26,4 +26,8 @@ ADDON = false;
     true
 ] call CBA_fnc_addSetting;
 
+if (isServer) then {
+    [QEGVAR(common,load), FUNC(handleLoadServer)] call CBA_fnc_addEventHandler;
+};
+
 ADDON = true;
