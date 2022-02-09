@@ -9,6 +9,7 @@ player setVariable [QGVAR(inShop), false];
 player setVariable [QGVAR(inArsenal), false, false];
 
 [GVAR(balanceHandle)] call CBA_fnc_removePerFrameHandler;
+[GVAR(rightPanelColor)] call CBA_fnc_removePerFrameHandler;
 
 private _items = [getUnitLoadout player] call EFUNC(locker,loadout_items);
 private _items = [_items] call EFUNC(locker,loadout_remove_owned);
