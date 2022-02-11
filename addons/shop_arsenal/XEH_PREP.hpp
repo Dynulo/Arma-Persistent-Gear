@@ -15,3 +15,4 @@ PREP(open);
 PREP(pfh_balance);
 PREP(sortStatement_owned);
 PREP(sortStatement_price);
+PREP(onSelChangedRightListnBox);

@@ -16,6 +16,7 @@
  *
  * Public: No
  */
+
 params ["_unit", "_backpack"];
 
 private _target = objectParent _backpack;
@@ -28,7 +29,7 @@ if (alive _target && {_target getVariable [QGVAR(inArsenal),false]}) exitWith {
 	},
 	{
 		(findDisplay 602) closeDisplay 0;
-		format ["%1 is in the Shop", ([getPlayerUID _target] call core_discord_fnc_findMemberFromSteam)#0] call CBA_fnc_notify;
+		(format ["%1 is in the Shop", ([getPlayerUID _target] call core_discord_fnc_findMemberFromSteam)#0]) call CBA_fnc_notify;
 	},
 	[]] call CBA_fnc_waitUntilAndExecute;
 };

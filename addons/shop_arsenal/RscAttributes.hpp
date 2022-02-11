@@ -1,4 +1,5 @@
 class RscControlsGroupNoScrollbars;
+class RscListNBox;
 class ctrlButton;
 
 class ace_arsenal_display {
@@ -9,6 +10,9 @@ class ace_arsenal_display {
 					onButtonClick = QUOTE([ctrlParent (_this select 0)] call FUNC(btnHide_onClick));
 				};
 			};
+		};
+		class rightTabContentListnBox: RscListNBox {
+			onLBSelChanged = QUOTE(_this call FUNC(onSelChangedRightListnBox));
 		};
 	};
 };

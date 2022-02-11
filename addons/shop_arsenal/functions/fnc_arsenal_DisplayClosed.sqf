@@ -6,10 +6,9 @@ if (ace_player isNotEqualTo player) exitWith {};
 if !(player getVariable [QGVAR(inShop), false]) exitWith {};
 
 player setVariable [QGVAR(inShop), false];
-player setVariable [QGVAR(inArsenal), false, false];
+player setVariable [QGVAR(inArsenal), false, true];
 
 [GVAR(balanceHandle)] call CBA_fnc_removePerFrameHandler;
-[GVAR(rightPanelColor)] call CBA_fnc_removePerFrameHandler;
 
 private _items = [getUnitLoadout player] call EFUNC(locker,loadout_items);
 private _items = [_items] call EFUNC(locker,loadout_remove_owned);
