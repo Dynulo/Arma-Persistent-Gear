@@ -2,6 +2,8 @@
 
 [QEGVAR(shop_arsenal,loaderRegister), QUOTE(ADDON)] call CBA_fnc_localEvent;
 
+if (EGVAR(common,readonly)) exitWith {};
+
 GVAR(tracking) = false;
 
 private _me = [getPlayerUID player] call core_discord_fnc_findMemberFromSteam;

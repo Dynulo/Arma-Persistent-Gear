@@ -1,5 +1,7 @@
 #include "script_component.hpp"
 
+if (EGVAR(common,readonly)) exitWith {};
+
 private _me = [getPlayerUID player] call core_discord_fnc_findMemberFromSteam;
 
 player setUnitLoadout [GVAR(preLoadout), false];

@@ -2,6 +2,8 @@
 
 params ["_display"];
 
+if (EGVAR(common,readonly)) exitWith {};
+
 if (ace_player isNotEqualTo player) exitWith {};
 if !(player getVariable [QGVAR(inShop), false]) exitWith {};
 

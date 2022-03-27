@@ -2,6 +2,10 @@
 
 params ["_display"];
 
+if (EGVAR(common,readonly)) exitWith {
+	[QGVAR(closing)] call CBA_fnc_localEvent;
+};
+
 if (ace_player isNotEqualTo player) exitWith {};
 if !(player getVariable [QGVAR(inShop), false]) exitWith {};
 

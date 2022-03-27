@@ -2,6 +2,8 @@
 
 params ["_unit", "_new"];
 
+if (EGVAR(common,readonly)) exitWith {};
+
 if !(GVAR(tracking)) exitWith {};
 if (_unit isNotEqualTo player) exitWith {};
 if !(player getVariable [QGVAR(loaded), false]) exitWith {};
