@@ -7,5 +7,8 @@ private _action = [QGVAR(shop), "Shop", "", {
 }] call ace_interact_menu_fnc_createAction;
 
 {
-	[_x, 0, ["ACE_MainActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+	if !(_x getVariable [QGVAR(has_action), false]) then {
+		[_x, 0, ["ACE_MainActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+		_x setVariable [QGVAR(has_action), true];
+	};
 } forEach GVAR(shops);
