@@ -1,8 +1,8 @@
 #include "script_component.hpp"
 
-[QEGVAR(shop_arsenal,loaderRegister), QUOTE(ADDON)] call CBA_fnc_localEvent;
-
 if (EGVAR(common,readonly)) exitWith {};
+
+[QEGVAR(shop_arsenal,loaderRegister), QUOTE(ADDON)] call CBA_fnc_localEvent;
 
 GVAR(tracking) = false;
 
